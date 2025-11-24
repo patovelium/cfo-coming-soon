@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>CFO Digital — Coming Soon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #ffffff;
+      color: #111;
+    }
+
+    .container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 48px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+
+    p {
+      font-size: 18px;
+      max-width: 600px;
+      margin-bottom: 40px;
+      color: #444;
+    }
+
+    .tag {
+      font-size: 14px;
+      letter-spacing: 3px;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      padding: 14px 28px;
+      background: #111;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      letter-spacing: 1px;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #000;
+      transform: translateY(-1px);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      font-size: 12px;
+      color: #aaa;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="tag">COMING SOON</div>
+    <h1>CFO Digital</h1>
+    <p>
+      El primer CFO con inteligencia artificial que entiende, organiza y optimiza las finanzas de tu empresa.
+    </p>
+    <a href="#" class="btn">Join the waitlist</a>
+  </div>
+
+  <footer>
+    © 2025 CFO Digital
+  </footer>
+</body>
+</html>
