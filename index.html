@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <title>Velium — CFO Digital</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
@@ -9,94 +9,225 @@
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background: #0d1b2a;
-      color: #e0e1dd;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      background: #0b1220;
+      color: #e5e7eb;
     }
 
-    .card {
-      background: #1b263b;
-      padding: 60px;
-      border-radius: 16px;
-      max-width: 500px;
-      text-align: center;
-      box-shadow: 0 0 40px rgba(0,0,0,0.4);
+    section {
+      padding: 70px 8%;
+      border-bottom: 1px solid #1f2933;
     }
 
-    h1 {
-      margin-bottom: 15px;
-      font-size: 2.4rem;
-      letter-spacing: 1px;
+    h1, h2, h3 {
+      font-weight: 500;
+      letter-spacing: 0.5px;
     }
 
     p {
       opacity: 0.85;
-      margin-bottom: 35px;
       line-height: 1.6;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 90vh;
+      background: radial-gradient(circle at top left, #1e293b, #0b1220 60%);
     }
 
     .tag {
       display: inline-block;
-      background: #415a77;
-      color: #e0e1dd;
-      padding: 8px 16px;
-      border-radius: 30px;
-      font-size: 0.9rem;
+      background: #1f2937;
+      padding: 8px 18px;
+      border-radius: 20px;
       margin-bottom: 30px;
+      font-size: 0.9rem;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      max-width: 550px;
+      font-size: 1.1rem;
+      margin-bottom: 40px;
+    }
+
+    .cta {
+      display: flex;
+      gap: 15px;
+      max-width: 400px;
     }
 
     input {
-      width: 100%;
+      flex: 1;
       padding: 14px;
       border-radius: 10px;
       border: none;
       outline: none;
-      margin-bottom: 20px;
-      background: #e0e1dd;
-      color: #0d1b2a;
     }
 
     button {
-      padding: 14px 30px;
-      border-radius: 8px;
+      padding: 14px 22px;
+      border-radius: 10px;
       border: none;
-      background: #778da9;
-      color: #0d1b2a;
+      background: #3b82f6;
+      color: white;
       font-weight: bold;
       cursor: pointer;
-      width: 100%;
     }
 
     button:hover {
-      background: #a4bcd4;
+      background: #2563eb;
     }
 
-    .footer {
-      margin-top: 20px;
-      font-size: 0.8rem;
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .card {
+      background: #111827;
+      padding: 30px;
+      border-radius: 18px;
+      border: 1px solid #1f2937;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+      gap: 25px;
+      margin-top: 40px;
+    }
+
+    .step {
+      padding: 20px;
+      border-left: 3px solid #3b82f6;
+      background: #0f172a;
+    }
+
+    footer {
+      text-align: center;
+      padding: 60px 10%;
+      font-size: 0.9rem;
       opacity: 0.6;
     }
+
   </style>
 </head>
 
 <body>
-  <div class="card">
-    <div class="tag">Próximamente</div>
-    <h1>Velium</h1>
-    <p>
-      Tu CFO Digital.<br/>
-      Estados financieros, control y estrategia en un solo lugar.
-    </p>
 
+<!-- HERO -->
+<section class="hero">
+  <div class="tag">Velium — CFO Digital</div>
+  <h1>El control financiero de tu empresa, al nivel de un fondo institucional</h1>
+  <p>
+    Construye tus estados financieros, proyecta tu futuro y toma decisiones
+    como un CFO profesional. Simple. Elegante. Poderoso.
+  </p>
+
+  <div class="cta">
     <input type="email" placeholder="Tu correo" />
-    <button>Avísame cuando esté listo</button>
+    <button>Unirme al early access</button>
+  </div>
+</section>
 
-    <div class="footer">
-      Apple meets Banxico
+<!-- WHAT IS -->
+<section>
+  <h2>¿Qué es Velium?</h2>
+  <p>
+    Velium es un CFO Digital diseñado para fundadores, directores financieros y equipos que
+    quieren claridad absoluta sobre su dinero.
+  </p>
+
+  <div class="grid-3">
+    <div class="card">
+      <h3>📊 Estados Financieros</h3>
+      <p>Genera tu balance, resultados y flujo de efectivo en minutos.</p>
+    </div>
+
+    <div class="card">
+      <h3>🤖 Inteligencia Financiera</h3>
+      <p>Asistencia con IA para interpretar los números y tomar decisiones.</p>
+    </div>
+
+    <div class="card">
+      <h3>📈 Proyección & Control</h3>
+      <p>Visualiza escenarios futuros antes de tomar una decisión.</p>
     </div>
   </div>
+</section>
+
+<!-- WHO IS IT FOR -->
+<section>
+  <h2>¿Para quién es?</h2>
+
+  <div class="grid-3">
+    <div class="card">
+      <h3>Fundadores</h3>
+      <p>Sabe exactamente a dónde va tu empresa.</p>
+    </div>
+
+    <div class="card">
+      <h3>Startups</h3>
+      <p>Controla métricas financieras sin contratar un equipo completo.</p>
+    </div>
+
+    <div class="card">
+      <h3>Empresas en expansión</h3>
+      <p>Toma decisiones con data real, no con intuición.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section>
+  <h2>¿Cómo funcionará?</h2>
+
+  <div class="steps">
+    <div class="step">
+      <h3>1. Regístrate</h3>
+      <p>Inicia con tu correo y dominio empresarial.</p>
+    </div>
+
+    <div class="step">
+      <h3>2. Crea tu estructura</h3>
+      <p>Agrega cuentas, activos, pasivos, ingresos y gastos.</p>
+    </div>
+
+    <div class="step">
+      <h3>3. Analiza & exporta</h3>
+      <p>Genera reportes listos para Excel o para inversionistas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section>
+  <h2>Sé parte del inicio de Velium</h2>
+  <p>Recibe acceso exclusivo antes del lanzamiento.</p>
+
+  <div class="cta" style="margin-top:30px">
+    <input type="email" placeholder="Correo corporativo" />
+    <button>Quiero acceso</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  Velium © 2025 — Apple meets Banxico
+</footer>
+
 </body>
 </html>
