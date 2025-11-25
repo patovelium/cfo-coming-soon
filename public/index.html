@@ -120,6 +120,79 @@
       color: #94a3b8;
     }
 
+section {
+  padding: 80px 8%;
+  border-top: 1px solid #f1f5f9;
+}
+
+section h2 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
+}
+
+section > p {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 60px auto;
+  color: #475569;
+}
+
+/* GRIDS */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* CARDS */
+.card, .step {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.04);
+  transition: all 0.2s ease;
+}
+
+.card:hover, .step:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 30px rgba(15, 23, 42, 0.08);
+}
+
+.card h3, .step h3 {
+  margin-bottom: 10px;
+}
+
+/* STEPS layout */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 1100px;
+  margin: 60px auto 0 auto;
+}
+
+/* FINAL CTA */
+.cta {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+/* MOBILE */
+@media(max-width: 900px) {
+  .grid-3,
+  .steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+    
     @media(max-width: 768px) {
       h1 {
         font-size: 38px;
