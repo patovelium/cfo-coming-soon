@@ -1,233 +1,170 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"/>
-  <title>Velium </title>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Velium – Tu CFO Digital</title>
+  <meta name="description" content="Velium es tu CFO digital. Estados financieros, control y estrategia en un solo lugar." />
+
+  <!-- FUENTE ESTILO APPLE / FINTECH -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background: #0b1220;
-      color: #e5e7eb;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    section {
-      padding: 70px 8%;
-      border-bottom: 1px solid #1f2933;
+    body {
+      background: #ffffff;
+      color: #0f172a;
     }
 
-    h1, h2, h3 {
+    header {
+      width: 100%;
+      padding: 24px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    header img {
+      height: 40px;
+    }
+
+    nav a {
+      margin-left: 40px;
+      text-decoration: none;
+      color: #64748b;
       font-weight: 500;
-      letter-spacing: 0.5px;
+      transition: 0.2s ease;
+    }
+
+    nav a:hover {
+      color: #0f172a;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 120px 40px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 56px;
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      margin-bottom: 24px;
     }
 
     p {
-      opacity: 0.85;
+      font-size: 20px;
+      color: #475569;
+      margin-bottom: 50px;
       line-height: 1.6;
     }
 
-    .hero {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: 90vh;
-      background: radial-gradient(circle at top left, #1e293b, #0b1220 60%);
-    }
-
-    .tag {
-      display: inline-block;
-      background: #1f2937;
-      padding: 8px 18px;
-      border-radius: 20px;
-      margin-bottom: 30px;
-      font-size: 0.9rem;
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      max-width: 600px;
+    .tagline {
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #0f766e;
+      font-weight: 600;
       margin-bottom: 20px;
     }
 
-    .hero p {
-      max-width: 550px;
-      font-size: 1.1rem;
-      margin-bottom: 40px;
-    }
-
-    .cta {
+    .notify-box {
       display: flex;
-      gap: 15px;
-      max-width: 400px;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     input {
-      flex: 1;
-      padding: 14px;
+      padding: 14px 18px;
+      width: 260px;
+      border: 1px solid #e2e8f0;
       border-radius: 10px;
-      border: none;
+      font-size: 15px;
       outline: none;
+      transition: 0.2s ease;
+    }
+
+    input:focus {
+      border-color: #0f766e;
     }
 
     button {
       padding: 14px 22px;
-      border-radius: 10px;
-      border: none;
-      background: #3b82f6;
+      background: #0f766e;
       color: white;
-      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
       cursor: pointer;
+      transition: 0.2s ease;
     }
 
     button:hover {
-      background: #2563eb;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-      gap: 30px;
-      margin-top: 40px;
-    }
-
-    .card {
-      background: #111827;
-      padding: 30px;
-      border-radius: 18px;
-      border: 1px solid #1f2937;
-    }
-
-    .card h3 {
-      margin-bottom: 10px;
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
-      gap: 25px;
-      margin-top: 40px;
-    }
-
-    .step {
-      padding: 20px;
-      border-left: 3px solid #3b82f6;
-      background: #0f172a;
+      background: #115e59;
     }
 
     footer {
       text-align: center;
-      padding: 60px 10%;
-      font-size: 0.9rem;
-      opacity: 0.6;
+      padding: 40px;
+      font-size: 13px;
+      color: #94a3b8;
     }
 
+    @media(max-width: 768px) {
+      h1 {
+        font-size: 38px;
+      }
+
+      header {
+        padding: 20px 30px;
+      }
+    }
   </style>
 </head>
-
 <body>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="tag">Velium — CFO Digital</div>
-  <h1>El control financiero de tu empresa, al nivel de tus sueños </h1>
+<header>
+  <img src="public/velium-logo.svg" alt="Velium Logo" />
+
+  <nav>
+    <a href="#">Plataforma</a>
+    <a href="#">Seguridad</a>
+    <a href="#">Login</a>
+  </nav>
+</header>
+
+<div class="container">
+
+  <div class="tagline">Velium / Tu CFO digital</div>
+
+  <h1>Estados financieros, control<br>y estrategia en un solo lugar.</h1>
+
   <p>
-    Construye tus estados financieros, proyecta tu futuro y toma 
-    decisiones. Simple. Elegante. Poderoso.
+    El primer CFO digital para empresas modernas.  
+    Diseñado para fundadores, financieros y emprendedores que toman decisiones con datos reales.
+    <br><br>
+    <strong>Apple meets Banxico.</strong>
   </p>
 
-  <div class="cta">
-    <input type="email" placeholder="Tu correo" />
-    <button>Join early access</button>
+  <div class="notify-box">
+    <input type="email" placeholder="Tu correo corporativo" />
+    <button>Únete a la lista</button>
   </div>
-</section>
 
-<!-- WHAT IS -->
-<section>
-  <h2>¿Qué es Velium?</h2>
-  <p>
-    Velium es una plataforma contable diseñado para fundadores, directores y equipos que
-    quieren claridad absoluta sobre su dinero.
-  </p>
+</div>
 
-  <div class="grid-3">
-    <div class="card">
-      <h3>📊 Estados Financieros</h3>
-      <p>Genera tu balance general, estado de resultados y flujo de efectivo en minutos.</p>
-    </div>
-
-    <div class="card">
-      <h3>🤖 Inteligencia Financiera</h3>
-      <p>Asistencia con IA para interpretar los números y tomar decisiones.</p>
-    </div>
-
-    <div class="card">
-      <h3>📈 Proyección & Control</h3>
-      <p>Visualiza escenarios futuros antes de tomar una decisión.</p>
-    </div>
-  </div>
-</section>
-
-<!-- WHO IS IT FOR -->
-<section>
-  <h2>¿Para quién es?</h2>
-
-  <div class="grid-3">
-    <div class="card">
-      <h3>Fundadores</h3>
-      <p>Saber exactamente en dónde está y a dónde va tu empresa.</p>
-    </div>
-
-    <div class="card">
-      <h3>Startups</h3>
-      <p>Controla métricas financieras sin necesidad de un equipo completo.</p>
-    </div>
-
-    <div class="card">
-      <h3>PyMES</h3>
-      <p>Toma decisiones con data real, no con intuición.</p>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section>
-  <h2>¿Cómo funciona?</h2>
-
-  <div class="steps">
-    <div class="step">
-      <h3>1. Regístrate</h3>
-      <p>Inicia sesión con tu correo.</p>
-    </div>
-
-    <div class="step">
-      <h3>2. Crea tu estructura</h3>
-      <p>Agrega cuentas, activos, pasivos, ingresos y gastos, 
-        la plataforma se encargará de todo lo demás.</p>
-    </div>
-
-    <div class="step">
-      <h3>3. Analiza & exporta</h3>
-      <p>Genera reportes listos para Excel con la claridad para inversionistas.</p>
-    </div>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
-<section>
-  <h2>Sé parte del futuro con Velium</h2>
-  <p>Recibe acceso exclusivo antes del lanzamiento.</p>
-
-  <div class="cta" style="margin-top:30px">
-    <input type="email" placeholder="Correo corporativo" />
-    <button>Quiero acceso</button>
-  </div>
-</section>
-
-<!-- FOOTER -->
 <footer>
-  Velium © 2025 — CFO at your fingertips
+  © 2025 Velium. Todos los derechos reservados.
 </footer>
 
 </body>
