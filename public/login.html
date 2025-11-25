@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Velium | Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background-color: #ffffff;
+
+      /* LOGO DE FONDO */
+      background-image: url('velium-logo.svg');
+      background-size: 180px;
+      background-repeat: repeat;
+      background-position: center;
+      background-blend-mode: luminosity;
+    }
+
+    .overlay {
+      background: rgba(255,255,255,0.94);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-box {
+      background: white;
+      padding: 48px;
+      width: 100%;
+      max-width: 420px;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+
+    .login-box img {
+      height: 80px;
+      margin-bottom: 28px;
+    }
+
+    h2 {
+      margin-bottom: 24px;
+      font-size: 22px;
+      color: #0f172a;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      font-size: 14px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #0f766e;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: #0f766e;
+      color: white;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    button:hover {
+      background: #115e59;
+      transform: translateY(-1px);
+    }
+
+    .back {
+      margin-top: 22px;
+      font-size: 13px;
+    }
+
+    .back a {
+      text-decoration: none;
+      color: #0f766e;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+<div class="overlay">
+  <div class="login-box">
+
+    <img src="velium-logo.svg" alt="Velium logo">
+
+    <h2>Inicia sesión en Velium</h2>
+
+    <input type="email" placeholder="Correo corporativo" />
+    <input type="password" placeholder="Contraseña" />
+
+    <button>Iniciar sesión</button>
+
+    <div class="back">
+      <a href="index.html">← Volver a Velium</a>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
