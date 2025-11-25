@@ -126,5 +126,41 @@ background-blend-mode: multiply;
   </div>
 </div>
 
+<script type="module">
+  import supabase from './supabase.js'
+
+  const button = document.querySelector("button")
+
+  button.addEventListener("click", async () => {
+    const email = document.querySelector('input[type="email"]').value
+    const password = document.querySelector('input[type="password"]').value
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    })
+
+    if (error) {
+      alert("Tu cuenta no existe o la contraseña es incorrecta")
+      return
+    }
+
+    // Ahora buscamos en la tabla "profiles"
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('dashboard_url')
+      .eq('email', email)
+      .single()
+
+    if (profileError || !profile) {
+      alert("Tu marca todavía no está configurada en Velium")
+      return
+    }
+
+    // Redirección personalizada
+    window.location.href = profile.dashboard_url
+  })
+</script>
+
 </body>
 </html>
