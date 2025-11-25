@@ -61,6 +61,32 @@
       margin-bottom: 24px;
     }
 
+    /* Otra parte del estilo del login */
+    
+    .login-btn {
+  color: #0f172a;
+  background: #ffffff;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: none;
+
+  /* Esto lo sube ligeramente para alinearlo con los otros */
+  transform: translateY(-3px);
+
+  /* Animación smooth */
+  transition: all 0.25s ease;
+}
+
+/* EFECTO HOVER PRO */
+.login-btn:hover {
+  background: #f1f5f9;
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+
     p {
       font-size: 20px;
       color: #475569;
@@ -219,8 +245,10 @@ section > p {
   <nav style="display:flex; gap:28px; font-size:0.95rem;">
     <a href="#" style="color:#9ca3af; text-decoration:none;">Plataforma</a>
     <a href="#" style="color:#9ca3af; text-decoration:none;">Seguridad</a>
-<a href="#" style="color:#0f172a; background:#ffffff; padding:10px 14px; border-radius:12px; font-weight:600;
-  font-size:1.05rem; text-decoration:none;">Login</a> 
+
+/* Boton de Login*/
+    
+<a href="#" class="login-btn">Login</a>
     
   </nav>
 </header>
