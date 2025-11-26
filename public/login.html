@@ -176,11 +176,11 @@
       .from('profiles')
       .select('dashboard_url')
       .eq('email', email)
-      .single()
+      .maybeSingle()
     
-console.log('Email buscado:', email)
-console.log('Profile:', profile)
-console.log('Error profile:', profileError)
+const { data: allProfiles } = await supabase.from('profiles').select('*')
+console.log(allProfiles)
+
     
     if (profileError || !profile || !profile.dashboard_url) {
       showError("Tu marca todavía no está configurada en Velium.")
