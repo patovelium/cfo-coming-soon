@@ -178,8 +178,10 @@
       .eq('email', email)
       .maybeSingle()
     
-const { data: allProfiles } = await supabase.from('profiles').select('*')
-console.log(allProfiles)
+const { data, error } = await supabase
+  .from('profiles')
+  .select('*')
+console.log('All profiles:', data)
 
     
     if (profileError || !profile || !profile.dashboard_url) {
