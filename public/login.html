@@ -123,12 +123,15 @@ background-blend-mode: multiply;
 
     <h2>Inicia sesión en Velium</h2>
 
-    <input type="email" placeholder="Tu correo" />
-    <input type="password" placeholder="Contraseña" />
+   <form id="login-form">
 
-    <button id="login-btn">Iniciar sesión</button>
-<p id="login-error" class="login-error"></p>
+  <input type="email" placeholder="Tu correo" required />
+  <input type="password" placeholder="Contraseña" required />
 
+  <button id="login-btn" type="submit">Iniciar sesión</button>
+  <p id="login-error" class="login-error"></p>
+
+</form>
 
     <div class="back">
       <a href="/">← Volver a Velium</a>
@@ -140,8 +143,9 @@ background-blend-mode: multiply;
 <script type="module">
   import supabase from './supabase.js'
 
-  const button = document.getElementById("login-btn")
+  const form = document.getElementById("login-form")
   const errorText = document.getElementById("login-error")
+  const button = document.getElementById("login-btn")
 
   function showError(message) {
     errorText.innerText = message
@@ -157,7 +161,9 @@ background-blend-mode: multiply;
     errorText.style.display = "none"
   }
 
-  button.addEventListener("click", async () => {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault()
+
     const email = document.querySelector('input[type="email"]').value
     const password = document.querySelector('input[type="password"]').value
 
