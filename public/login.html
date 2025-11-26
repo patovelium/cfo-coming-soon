@@ -117,7 +117,7 @@ background-blend-mode: multiply;
     <input type="email" placeholder="Tu correo" />
     <input type="password" placeholder="Contraseña" />
 
-    <button>Iniciar sesión</button>
+    <button type="button">Iniciar sesión</button>
 
     <div class="back">
       <a href="/">← Volver a Velium</a>
@@ -127,6 +127,9 @@ background-blend-mode: multiply;
 </div>
 
 <script type="module">
+
+  console.log("LOGIN JS CARGADO ✅")
+
   import supabase from './supabase.js'
 
   const button = document.querySelector("button")
