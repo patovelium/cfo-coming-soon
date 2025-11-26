@@ -105,18 +105,6 @@
       font-size: 14px;
       text-align: center;
     }
-
-    .shake {
-      animation: shake 0.3s;
-    }
-
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      50% { transform: translateX(5px); }
-      75% { transform: translateX(-5px); }
-      100% { transform: translateX(0); }
-    }
   </style>
 </head>
 <body>
@@ -133,7 +121,6 @@
     <form id="login-form">
       <input type="email" placeholder="Tu correo" required />
       <input type="password" placeholder="Contraseña" required />
-
       <button id="login-btn" type="submit">Iniciar sesión</button>
       <p id="login-error" class="login-error"></p>
     </form>
@@ -156,7 +143,9 @@
     errorText.innerText = message
     errorText.style.display = "block"
     button.classList.add("shake")
-    setTimeout(() => button.classList.remove("shake"), 300)
+    setTimeout(() => {
+      button.classList.remove("shake")
+    }, 300)
   }
 
   function hideError() {
@@ -165,34 +154,38 @@
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault()
+
+    const email = document.querySelector('input[type="email"]').value.toLowerCase()
+    const password = document.querySelector('input[type="password"]').value
+
     hideError()
 
-    const email = form.querySelector('input[type="email"]').value
-    const password = form.querySelector('input[type="password"]').value
+    // Sign in
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    })
 
-    // Login con Supabase
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-
-    if (error) {
+    if (error || !data.user) {
       showError("Tu cuenta no existe o la contraseña es incorrecta.")
       return
     }
 
-    // Obtener la URL de dashboard desde profiles
+    // Fetch profile
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('dashboard_url')
-      .eq('email', data.user.email)
+      .eq('email', email)
       .single()
 
-    if (profileError || !profile) {
+    if (profileError || !profile || !profile.dashboard_url) {
       showError("Tu marca todavía no está configurada en Velium.")
       return
     }
 
-    // Redirección automática
-    const { dashboard_url } = profile
-    window.location.href = dashboard_url
+    // Redirect to the brand dashboard
+    const dashboardUrl = profile.dashboard_url
+    window.location.href = dashboardUrl
   })
 </script>
 
