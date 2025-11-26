@@ -11,10 +11,16 @@
     window.location.href = "/login.html"
   }
 
-  // Solo permitir el mail de Cartón
-  if (session.user.email !== "chat@carton.com") {
-    window.location.href = "/login.html"
-  }
+const { data: profile } = await supabase
+  .from('profiles')
+  .select('dashboard_url')
+  .eq('email', session.user.email)
+  .single()
+
+// Si no tiene perfil o intenta entrar a otra marca
+if (!profile || profile.dashboard_url !== "/brands/carton.html") {
+  window.location.href = "/login.html"
+}
 
     const logoutBtn = document.getElementById("logoutBtn")
 
