@@ -100,6 +100,15 @@ background-blend-mode: multiply;
       color: #0f766e;
       font-weight: 500;
     }
+
+    .login-error {
+  display: none;
+  color: #dc2626;
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+}
+
   </style>
 </head>
 <body>
@@ -117,7 +126,9 @@ background-blend-mode: multiply;
     <input type="email" placeholder="Tu correo" />
     <input type="password" placeholder="Contraseña" />
 
-    <button type="button">Iniciar sesión</button>
+    <button id="login-btn">Iniciar sesión</button>
+<p id="login-error" class="login-error"></p>
+
 
     <div class="back">
       <a href="/">← Volver a Velium</a>
@@ -127,16 +138,30 @@ background-blend-mode: multiply;
 </div>
 
 <script type="module">
-
-  console.log("LOGIN JS CARGADO ✅")
-
   import supabase from './supabase.js'
 
-  const button = document.querySelector("button")
+  const button = document.getElementById("login-btn")
+  const errorText = document.getElementById("login-error")
+
+  function showError(message) {
+    errorText.innerText = message
+    errorText.style.display = "block"
+
+    button.classList.add("shake")
+    setTimeout(() => {
+      button.classList.remove("shake")
+    }, 300)
+  }
+
+  function hideError() {
+    errorText.style.display = "none"
+  }
 
   button.addEventListener("click", async () => {
     const email = document.querySelector('input[type="email"]').value
     const password = document.querySelector('input[type="password"]').value
+
+    hideError()
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -144,11 +169,10 @@ background-blend-mode: multiply;
     })
 
     if (error) {
-      alert("Tu cuenta no existe o la contraseña es incorrecta")
+      showError("Tu cuenta no existe o la contraseña es incorrecta")
       return
     }
 
-    // Ahora buscamos en la tabla "profiles"
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('dashboard_url')
@@ -156,14 +180,14 @@ background-blend-mode: multiply;
       .single()
 
     if (profileError || !profile) {
-      alert("Tu marca todavía no está configurada en Velium")
+      showError("Tu marca todavía no está configurada en Velium")
       return
     }
 
-    // Redirección personalizada
     window.location.href = profile.dashboard_url
   })
 </script>
+
 
 </body>
 </html>
