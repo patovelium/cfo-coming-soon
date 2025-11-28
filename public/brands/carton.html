@@ -224,18 +224,23 @@
   const modal = document.getElementById("dataModal")
   const openBtn = document.getElementById("openModal")
 
+  const estado = document.getElementById("estado")
+  const cuenta = document.getElementById("cuenta")
+  const monto = document.getElementById("monto")
+
   // Abrir modal
   openBtn.addEventListener("click", (e) => {
     e.preventDefault()
+
+    // Mostrar el modal
     modal.style.display = "flex"
+
+    // Limpiar los campos
+    estado.value = ""
+    cuenta.value = ""
+    monto.value = ""
   })
-  
-  // Limpiar valores al abrir
-  document.getElementById("estado").value = ""
-  document.getElementById("cuenta").value = ""
-  document.getElementById("monto").value = ""
-})
-  
+
   // Cerrar si haces clic afuera de la caja
   modal.addEventListener("click", (e) => {
     if (e.target === modal) {
@@ -243,6 +248,7 @@
     }
   })
 </script>
+
 
 
 </body>
