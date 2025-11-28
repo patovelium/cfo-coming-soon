@@ -121,20 +121,35 @@
 
     <h3>Agregar Datos</h3>
 
-    <label>Estado:</label>
-    <select>
-      <option>Estado de Resultados</option>
-      <option>Balance General</option>
-      <option>Cashflow</option>
-      <option>No estoy seguro</option>
-    </select>
+<label>Estado:</label>
+<select id="estado">
+  <option value="" selected disabled hidden>Selecciona una opción</option>
+  <option>Estado de Resultados</option>
+  <option>Balance General</option>
+  <option>Cashflow</option>
+</select>
 
-    <label>Cuenta:</label>
-    <select>
-      <option>Ventas</option>
-      <option>Costo de Ventas</option>
-      <option>Inversión</option>
-    </select>
+<label>Cuenta:</label>
+<select id="cuenta">
+  <option value="" selected disabled hidden>Selecciona una opción</option>
+  <option>Ventas</option>
+  <option>Costo de Ventas</option>
+  <option>Inversión</option>
+</select>
+
+<label>Monto ($):</label>
+<input 
+  id="monto"
+  type="number" 
+  placeholder="Ej. 15000" 
+  style="
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 10px;
+  "
+>
 
     <button class="load-btn">Cargar</button>
 
@@ -214,7 +229,13 @@
     e.preventDefault()
     modal.style.display = "flex"
   })
-
+  
+  // Limpiar valores al abrir
+  document.getElementById("estado").value = ""
+  document.getElementById("cuenta").value = ""
+  document.getElementById("monto").value = ""
+})
+  
   // Cerrar si haces clic afuera de la caja
   modal.addEventListener("click", (e) => {
     if (e.target === modal) {
