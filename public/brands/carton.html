@@ -259,44 +259,48 @@ fecha.value = hoy
   })
 </script>
 
-  <script type="module">
-  import supabase from '../supabase.js'
+<script type="module">
+import supabase from '../supabase.js'
 
-  const cargarBtn = document.getElementById("cargarBtn")
-  const cuenta = document.getElementById("cuenta")
-  const monto = document.getElementById("monto")
-  const fecha = document.getElementById("fecha")
+const cargarBtn = document.getElementById("cargarBtn")
+const cuenta = document.getElementById("cuenta")
+const monto = document.getElementById("monto")
+const fecha = document.getElementById("fecha")
 
-  cargarBtn.addEventListener("click", async () => {
+cargarBtn.addEventListener("click", async () => {
 
-    // Validación rápida
-    if (!cuenta.value || !monto.value || !fecha.value) {
-      alert("Completa todos los campos")
-      return
-    }
+  if (!cuenta.value || !monto.value || !fecha.value) {
+    alert("Completa todos los campos")
+    return
+  }
 
-    // Obtenemos el usuario actual
-    const { data: { session } } = await supabase.auth.getSession()
+  // Obtener sesión
+  const { data: { session }, error: sessionError } = await supabase.auth.getSession()
 
-    // Insertar en la tabla
-    const { error } = await supabase
-      .from("carton_data")
-      .insert({
-        cuenta: cuenta.value,
-        monto: monto.value,
-        fecha: fecha.value,
-        user_email: session.user.email
-      })
+  if (!session) {
+    alert("Sesión no encontrada")
+    return
+  }
 
-    if (error) {
-      console.error(error)
-      alert("Error al guardar los datos")
-      return
-    }
+  // Insertar datos
+  const { error } = await supabase
+    .from("carton_data")
+    .insert({
+      cuenta: cuenta.value,
+      monto: Number(monto.value),
+      fecha: fecha.value,
+      user_email: session.user.email
+    })
 
-    alert("Datos guardados correctamente 🎉")
-    document.getElementById("dataModal").style.display = "none"
-  })
+  if (error) {
+    console.error("Error Supabase:", error)
+    alert("Error al guardar los datos")
+    return
+  }
+
+  alert("Datos guardados correctamente 🎉")
+  document.getElementById("dataModal").style.display = "none"
+})
 </script>
 
 </body>
