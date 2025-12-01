@@ -121,14 +121,6 @@
 
     <h3>Agregar Datos</h3>
 
-<label>Estado:</label>
-<select id="estado">
-  <option value="" selected disabled hidden>Selecciona una opción</option>
-  <option>Estado de Resultados</option>
-  <option>Balance General</option>
-  <option>Cashflow</option>
-</select>
-
 <label>Cuenta:</label>
 <select id="cuenta">
   <option value="" selected disabled hidden>Selecciona una opción</option>
@@ -166,7 +158,7 @@
   "
 >
     
-    <button class="load-btn">Cargar</button>
+    <button id="cargarBtn" class="load-btn">Cargar</button>
 
   </div>
 
@@ -239,7 +231,6 @@
   const modal = document.getElementById("dataModal")
   const openBtn = document.getElementById("openModal")
 
-  const estado = document.getElementById("estado")
   const cuenta = document.getElementById("cuenta")
   const monto = document.getElementById("monto")
   const fecha = document.getElementById("fecha")
@@ -253,7 +244,6 @@
     modal.style.display = "flex"
 
     // Limpiar los campos
-    estado.value = ""
     cuenta.value = ""
     monto.value = ""
     // Fecha default = HOY (en formato YYYY-MM-DD)
@@ -269,7 +259,45 @@ fecha.value = hoy
   })
 </script>
 
+  <script type="module">
+  import supabase from '../supabase.js'
 
+  const cargarBtn = document.getElementById("cargarBtn")
+  const cuenta = document.getElementById("cuenta")
+  const monto = document.getElementById("monto")
+  const fecha = document.getElementById("fecha")
+
+  cargarBtn.addEventListener("click", async () => {
+
+    // Validación rápida
+    if (!cuenta.value || !monto.value || !fecha.value) {
+      alert("Completa todos los campos")
+      return
+    }
+
+    // Obtenemos el usuario actual
+    const { data: { session } } = await supabase.auth.getSession()
+
+    // Insertar en la tabla
+    const { error } = await supabase
+      .from("carton_data")
+      .insert({
+        cuenta: cuenta.value,
+        monto: monto.value,
+        fecha: fecha.value,
+        user_email: session.user.email
+      })
+
+    if (error) {
+      console.error(error)
+      alert("Error al guardar los datos")
+      return
+    }
+
+    alert("Datos guardados correctamente 🎉")
+    document.getElementById("dataModal").style.display = "none"
+  })
+</script>
 
 </body>
 </html>
