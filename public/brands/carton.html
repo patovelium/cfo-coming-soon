@@ -151,6 +151,19 @@
   "
 >
 
+<label>Fecha:</label>
+<input 
+  id="fecha"
+  type="date"
+  style="
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 10px;
+  "
+>
+    
     <button class="load-btn">Cargar</button>
 
   </div>
@@ -227,6 +240,8 @@
   const estado = document.getElementById("estado")
   const cuenta = document.getElementById("cuenta")
   const monto = document.getElementById("monto")
+  const fecha = document.getElementById("fecha")
+
 
   // Abrir modal
   openBtn.addEventListener("click", (e) => {
@@ -239,6 +254,9 @@
     estado.value = ""
     cuenta.value = ""
     monto.value = ""
+    // Fecha default = HOY (en formato YYYY-MM-DD)
+const hoy = new Date().toISOString().split("T")[0]
+fecha.value = hoy
   })
 
   // Cerrar si haces clic afuera de la caja
