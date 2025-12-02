@@ -193,11 +193,38 @@
       </button>
   </div>
 
-<table class="tabla-estado-resultados">
+<!-- CONTENEDOR DE LA TABLA -->
+<div style="
+    background: white;
+    border-radius: 18px;
+    padding: 32px 40px;
+    width: 97%;
+    max-width: 1200px;
+    margin-top: 10px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+    border: 1px solid #e2e8f0;
+">
 
-  
+  <table style="
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 10px;
+      font-size: 15px;
+  ">
+    <thead>
+      <tr style="color:#475569; text-transform:uppercase; font-size:13px; letter-spacing:0.5px;">
+        <th style="padding-bottom: 12px; text-align:left;">Cuenta</th>
+        <th style="padding-bottom: 12px; text-align:right;">Monto ($)</th>
+      </tr>
+    </thead>
 
-    <tbody>
+    <tbody id="tablaER">
+      <!-- (Aquí van todas las filas del estado de resultados) -->
+    </tbody>
+  </table>
+
+</div>
+
 
 <!-- TABLA CENTRADA Y MÁS ANCHA -->
 <div style="
