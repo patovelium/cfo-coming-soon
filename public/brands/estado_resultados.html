@@ -193,84 +193,109 @@
       </button>
   </div>
 
-  <!-- TABLA CENTRADA Y MÁS ANCHA -->
-  <div style="
-      background: white;
-      border-radius: 18px;
-      padding: 30px;
-      width: 97%;
-      max-width: 1200px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-      border: 1px solid #e2e8f0;
-  ">
-   <table style="
-    width: 100%; 
-    border-collapse: separate; 
-    border-spacing: 0 10px; 
-    font-size: 16px;
-">
-  <thead>
-    <tr style="color:#475569; text-transform:uppercase; font-size:14px; letter-spacing:0.5px;">
-      <th style="padding-bottom: 12px;">Cuenta</th>
-      <th style="padding-bottom: 12px; text-align:right;">Monto ($)</th>
-    </tr>
-  </thead>
+<table class="tabla-estado-resultados">
+    <thead>
+        <tr>
+            <th>Cuenta</th>
+            <th>Monto</th>
+        </tr>
+    </thead>
 
-  <tbody id="tablaER">
+    <tbody>
 
-    <tr style="background:#f8fafc; border-radius:12px;">
-      <td style="padding:14px 18px;"><strong>Ventas</strong></td>
-      <td style="padding:14px 18px; text-align:right;" id="er-ventas">$0</td>
-    </tr>
+        <!-- INGRESOS -->
+        <tr class="seccion">
+            <td colspan="2">INGRESOS</td>
+        </tr>
+        <tr><td>Ventas Netas</td><td><input type="number" placeholder="0.00"></td></tr>
+        <tr><td>Ingresos por Servicios</td><td><input type="number" placeholder="0.00"></td></tr>
+        <tr><td>Otros Ingresos Operativos</td><td><input type="number" placeholder="0.00"></td></tr>
+        <tr><td>Devoluciones y Rebajas</td><td><input type="number" placeholder="0.00"></td></tr>
+        <tr><td>Ingresos Financieros</td><td><input type="number" placeholder="0.00"></td></tr>
+        <tr><td>Ingresos por Arrendamientos</td><td><input type="number" placeholder="0.00"></td></tr>
+        <tr><td>Ingresos por Proyectos</td><td><input type="number" placeholder="0.00"></td></tr>
+        <tr><td>Ingresos No Recurrentes</td><td><input type="number" placeholder="0.00"></td></tr>
 
-    <tr style="background:white;">
-      <td style="padding:14px 18px;">Costo de Ventas</td>
-      <td style="padding:14px 18px; text-align:right;" id="er-costo">$0</td>
-    </tr>
+        <!-- COSTOS -->
+        <tr class="seccion">
+            <td colspan="2">COSTOS</td>
+        </tr>
+        <tr><td>Costo de Ventas</td><td><input type="number"></td></tr>
+        <tr><td>Costo de Servicios</td><td><input type="number"></td></tr>
+        <tr><td>Mano de Obra Directa</td><td><input type="number"></td></tr>
+        <tr><td>Materiales Directos</td><td><input type="number"></td></tr>
+        <tr><td>Gastos de Producción</td><td><input type="number"></td></tr>
+        <tr><td>Fletes y Logística</td><td><input type="number"></td></tr>
+        <tr><td>Costo de Proyectos</td><td><input type="number"></td></tr>
+        <tr><td>Depreciación (Costo)</td><td><input type="number"></td></tr>
+        <tr><td>Amortización (Costo)</td><td><input type="number"></td></tr>
 
-    <tr style="background:#f1f5f9; font-weight:600;">
-      <td style="padding:14px 18px;">Utilidad Bruta</td>
-      <td style="padding:14px 18px; text-align:right;" id="er-utilidadBruta">$0</td>
-    </tr>
+        <!-- GASTOS OPERATIVOS -->
+        <tr class="seccion">
+            <td colspan="2">GASTOS OPERATIVOS</td>
+        </tr>
+        <tr><td>Gastos de Administración</td><td><input type="number"></td></tr>
+        <tr><td>Gastos de Venta</td><td><input type="number"></td></tr>
+        <tr><td>Gastos de Mercadotecnia</td><td><input type="number"></td></tr>
+        <tr><td>Gastos de Nómina</td><td><input type="number"></td></tr>
+        <tr><td>Honorarios Profesionales</td><td><input type="number"></td></tr>
+        <tr><td>Rentas</td><td><input type="number"></td></tr>
+        <tr><td>Servicios (Luz, Agua, Internet)</td><td><input type="number"></td></tr>
+        <tr><td>Seguros</td><td><input type="number"></td></tr>
+        <tr><td>Publicidad y Promoción</td><td><input type="number"></td></tr>
+        <tr><td>Viáticos</td><td><input type="number"></td></tr>
+        <tr><td>Mantenimiento</td><td><input type="number"></td></tr>
+        <tr><td>Telefonía y Comunicaciones</td><td><input type="number"></td></tr>
+        <tr><td>Combustible</td><td><input type="number"></td></tr>
+        <tr><td>Papelería y Oficina</td><td><input type="number"></td></tr>
+        <tr><td>Capacitación</td><td><input type="number"></td></tr>
+        <tr><td>Software y Suscripciones</td><td><input type="number"></td></tr>
 
-    <tr style="background:white;">
-      <td style="padding:14px 18px;">Gastos Operativos</td>
-      <td style="padding:14px 18px; text-align:right;" id="er-gastosOp">$0</td>
-    </tr>
+        <!-- OTROS INGRESOS / GASTOS -->
+        <tr class="seccion">
+            <td colspan="2">OTROS GASTOS / OTROS INGRESOS</td>
+        </tr>
+        <tr><td>Depreciación (Gastos)</td><td><input type="number"></td></tr>
+        <tr><td>Amortización (Gastos)</td><td><input type="number"></td></tr>
+        <tr><td>Otros Gastos</td><td><input type="number"></td></tr>
+        <tr><td>Otros Ingresos</td><td><input type="number"></td></tr>
+        <tr><td>Pérdida por Obsolescencia</td><td><input type="number"></td></tr>
+        <tr><td>Gastos Extraordinarios</td><td><input type="number"></td></tr>
+        <tr><td>Ingresos Extraordinarios</td><td><input type="number"></td></tr>
+        <tr><td>Pérdidas Cambiarias</td><td><input type="number"></td></tr>
+        <tr><td>Ganancias Cambiarias</td><td><input type="number"></td></tr>
 
-    <tr style="background:white;">
-      <td style="padding:14px 18px;">Gastos Administrativos</td>
-      <td style="padding:14px 18px; text-align:right;" id="er-gastosAdmin">$0</td>
-    </tr>
+        <!-- RESULTADO FINANCIERO -->
+        <tr class="seccion">
+            <td colspan="2">RESULTADO FINANCIERO</td>
+        </tr>
+        <tr><td>Intereses Pagados</td><td><input type="number"></td></tr>
+        <tr><td>Intereses Ganados</td><td><input type="number"></td></tr>
+        <tr><td>Gastos Bancarios</td><td><input type="number"></td></tr>
+        <tr><td>Comisiones Financieras</td><td><input type="number"></td></tr>
+        <tr><td>Revaluación de Activos Financieros</td><td><input type="number"></td></tr>
 
-    <tr style="background:white;">
-      <td style="padding:14px 18px;">Publicidad y Marketing</td>
-      <td style="padding:14px 18px; text-align:right;" id="er-marketing">$0</td>
-    </tr>
+        <!-- IMPUESTOS -->
+        <tr class="seccion">
+            <td colspan="2">IMPUESTOS</td>
+        </tr>
+        <tr><td>ISR</td><td><input type="number"></td></tr>
+        <tr><td>PTU</td><td><input type="number"></td></tr>
+        <tr><td>IVA Trasladado</td><td><input type="number"></td></tr>
+        <tr><td>IVA Acreditable</td><td><input type="number"></td></tr>
+        <tr><td>Impuestos Locales</td><td><input type="number"></td></tr>
 
-    <tr style="background:white;">
-      <td style="padding:14px 18px;">Gastos Financieros</td>
-      <td style="padding:14px 18px; text-align:right;" id="er-financieros">$0</td>
-    </tr>
+        <!-- RESULTADO FINAL -->
+        <tr class="seccion">
+            <td colspan="2">RESULTADO FINAL</td>
+        </tr>
+        <tr><td>Utilidad Bruta</td><td><input type="number"></td></tr>
+        <tr><td>Utilidad Operativa</td><td><input type="number"></td></tr>
+        <tr><td>Utilidad Antes de Impuestos</td><td><input type="number"></td></tr>
+        <tr><td>Utilidad Neta</td><td><input type="number"></td></tr>
 
-    <tr style="background:#f1f5f9; font-weight:600;">
-      <td style="padding:14px 18px;">Utilidad Operativa</td>
-      <td style="padding:14px 18px; text-align:right;" id="er-utilidadOperativa">$0</td>
-    </tr>
-
-    <tr style="background:white;">
-      <td style="padding:14px 18px;">Impuestos</td>
-      <td style="padding:14px 18px; text-align:right;" id="er-impuestos">$0</td>
-    </tr>
-
-    <tr style="background:#e2e8f0; font-weight:700;">
-      <td style="padding:14px 18px;">Utilidad Neta</td>
-      <td style="padding:14px 18px; text-align:right;" id="er-utilidadNeta">$0</td>
-    </tr>
-
-  </tbody>
+    </tbody>
 </table>
-  </div>
 
 </div>
 
