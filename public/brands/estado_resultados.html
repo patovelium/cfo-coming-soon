@@ -1,574 +1,531 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Velium | Cartón</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Velium | Cartón</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../Favicon_Velium.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 
-  <link rel="icon" type="image/png" href="../Favicon_Velium.png">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <!-- Script de protección -->
+    <script type="module">
+        import supabase from '../supabase.js'
 
-  <!-- Script de protección -->
-  <script type="module">
-    import supabase from '../supabase.js'
+        const { data: { session } } = await supabase.auth.getSession()
+        if (!session) {
+            window.location.href = "/login.html"
+        }
 
-    const { data: { session } } = await supabase.auth.getSession()
+        const { data: profile } = await supabase
+            .from('profiles')
+            .select('dashboard_url')
+            .eq('email', session.user.email)
+            .single()
 
-    if (!session) {
-      window.location.href = "/login.html"
-    }
+        if (!profile || profile.dashboard_url !== "/brands/carton.html") {
+            window.location.href = "/login.html"
+        }
+    </script>
 
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('dashboard_url')
-      .eq('email', session.user.email)
-      .single()
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
 
-    if (!profile || profile.dashboard_url !== "/brands/carton.html") {
-      window.location.href = "/login.html"
-    }
-  </script>
+        body {
+            background: #ffffff;
+            color: #0f172a;
+        }
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
+        header img {
+            height: 40px;
+        }
 
-    body {
-      background: #ffffff;
-      color: #0f172a;
-    }
+        nav a {
+            margin-left: 40px;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 500;
+            transition: 0.2s ease;
+        }
 
-    header img {
-      height: 40px;
-    }
+        nav a:hover {
+            color: #0f172a;
+        }
 
-    nav a {
-      margin-left: 40px;
-      text-decoration: none;
-      color: #64748b;
-      font-weight: 500;
-      transition: 0.2s ease;
-    }
+        .login-btn {
+            color: #0f172a;
+            background: #ffffff;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transform: translateY(0px);
+            transition: all 0.25s ease;
+        }
 
-    nav a:hover {
-      color: #0f172a;
-    }
+        .login-btn:hover {
+            background: #f1f5f9;
+            transform: translateY(-6px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
 
-    .login-btn {
-      color: #0f172a;
-      background: #ffffff;
-      padding: 10px 18px;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 1.05rem;
-      text-decoration: none;
-      transform: translateY(0px);
-      transition: all 0.25s ease;
-    }
+        .filter-btn {
+            padding: 10px 18px;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            background: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
 
-    .login-btn:hover {
-      background: #f1f5f9;
-      transform: translateY(-6px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-    .filter-btn {
-  padding: 10px 18px;
-  border-radius: 12px;
-  border: 1px solid #cbd5e1;
-  background: white;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
+        .filter-btn:hover {
+            background: #f1f5f9;
+        }
 
-.filter-btn:hover {
-  background: #f1f5f9;
-}
-
-.filter-btn.active {
-  background: #0f766e;
-  color: white;
-  border-color: #0f766e;
-}
-  </style>
+        .filter-btn.active {
+            background: #0f766e;
+            color: white;
+            border-color: #0f766e;
+        }
+    </style>
 </head>
 
 <body>
 
-<header style="
-  width: 100%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding: 0.5rem 5%;
-  background: #111827;
-  border-bottom: 1px solid #1f2937;
-">
-  <a href="/brands/carton.html">
-    <img src="../demologo.svg" alt="Velium Logo" style="height:4.5rem; margin-left: -2.3rem ">
-  </a>
-
-  <nav style="display:flex; gap:30px; font-size:0.95rem;align-items:center; margin-top:6px; margin-left: 70px">
-    <a href="/brands/carton.html" style="color:#F9FAFB; text-decoration:none;">Dashboard</a>
-    <a href="#" id="openModal" style="color:#F9FAFB; text-decoration:none;">Agregar Datos</a>
-    <a href="#" style="color:#F9FAFB; text-decoration:none;">Simulador</a>
-    <a href="/brands/estado_resultados.html" style="color:#F9FAFB; text-decoration:none;">Estado de Resultados</a>
-    <a href="#" style="color:#F9FAFB; text-decoration:none;">Balance General</a>
-    <a href="#" style="color:#F9FAFB; text-decoration:none;">Cashflow</a>
-    <a href="#" id="logout-btn" class="login-btn">Logout</a>
-  </nav>
-
-  </header>
-<!-- ============================
-     ESTADO DE RESULTADOS VIEW
-=============================== -->
-<div id="estadoResultados" style="padding: 40px 6%; display:block">
-
-  <div style="text-align:center; margin-bottom: 40px;">
-  <h2 style="
-      font-size: 2.4rem;
-      font-weight: 800;
-      color: #0f172a;
-      letter-spacing: -0.5px;
-  ">
-    Estado de Resultados
-  </h2>
-  <p style="
-      color:#475569;
-      font-size: 1rem;
-      margin-top: 8px;
-  ">
-    Resumen financiero por periodo seleccionado
-  </p>
-</div>
-
-<!-- FILTROS DE FECHA -->
-<div style="
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    margin-bottom: 30px;
-    align-items: flex-start;
-">
-
-  <!-- FECHAS + BOTÓN -->
-  <div style="display:flex; gap:20px; align-items:flex-end;">
-
-      <div>
-          <label style="font-size:14px; font-weight:600;">Fecha Inicial</label><br>
-          <input type="date" id="fechaInicio" style="
-              padding:8px 12px;
-              border-radius:10px;
-              border:1px solid #cbd5e1;
-              min-width:160px;
-          ">
-      </div>
-
-      <div>
-          <label style="font-size:14px; font-weight:600;">Fecha Final</label><br>
-          <input type="date" id="fechaFinal" style="
-              padding:8px 12px;
-              border-radius:10px;
-              border:1px solid #cbd5e1;
-              min-width:160px;
-          ">
-      </div>
-
-      <button id="actualizarBtn" style="
-          padding:10px 18px;
-          border-radius:12px;
-          background:#0f766e;
-          color:white;
-          font-weight:600;
-          border:none;
-          cursor:pointer;
-          height:42px;
-          transform: translateY(2px);
-      ">
-      Actualizar
-      </button>
-<!-- CONTENEDOR DE LA TABLA -->
-<div style="
-    background: white;
-    border-radius: 18px;
-    padding: 32px 40px;
-    width: 97%;
-    max-width: 1200px;
-    margin-top: 10px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.05);
-    border: 1px solid #e2e8f0;
-">
-
-  <table style="
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0 10px;
-      font-size: 15px;
-  ">
-
-    <tbody id="tablaER">
-      <!-- (Aquí van todas las filas del estado de resultados) -->
-    </tbody>
-  </table>
-
-</div>
-
-
-    
-<!-- TABLA CENTRADA Y MÁS ANCHA -->
-<div style="
-    background: white;
-    border-radius: 18px;
-    padding: 32px 40px;
-    width: 97%;
-    max-width: 1200px;
-    margin-top: 10px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.05);
-    border: 1px solid #e2e8f0;
-">
-
-  <table style="
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0 10px;
-      font-size: 15px;
-  ">
-    <thead>
-      <tr style="color:#475569; text-transform:uppercase; font-size:13px; letter-spacing:0.5px;">
-        <th style="padding-bottom: 12px; text-align:left;">Cuenta</th>
-        <th style="padding-bottom: 12px; text-align:right;">Monto ($)</th>
-      </tr>
-    </thead>
-
-    <tbody id="tablaER">
-
-      <!-- ===== INGRESOS ===== -->
-      <tr style="background:#f8fafc;">
-        <td style="padding:12px 18px;"><strong>Ventas Netas</strong></td>
-        <td style="padding:12px 18px; text-align:right;" id="er-ventas">$0</td>
-      </tr>
-
-      <tr style="background:white;">
-        <td style="padding:12px 18px;">Ingresos por Servicios</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-servicios">$0</td>
-      </tr>
-
-      <tr style="background:white;">
-        <td style="padding:12px 18px;">Otros Ingresos Operativos</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-otrosIngresosOp">$0</td>
-      </tr>
-
-      <!-- ===== COSTOS ===== -->
-      <tr style="background:white;">
-        <td style="padding:12px 18px;">Costo de Ventas</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-costoVentas">$0</td>
-      </tr>
-
-      <tr style="background:white;">
-        <td style="padding:12px 18px;">Costo de Servicios</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-costoServicios">$0</td>
-      </tr>
-
-      <!-- ===== UTILIDAD BRUTA ===== -->
-      <tr style="background:#eef2f7; font-weight:600;">
-        <td style="padding:12px 18px;">Utilidad Bruta</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-utilidadBruta">$0</td>
-      </tr>
-
-      <!-- ===== GASTOS OPERATIVOS ===== -->
-      <tr style="background:white;">
-        <td style="padding:12px 18px;">Gastos Operativos</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-gastosOperativos">$0</td>
-      </tr>
-
-      <tr style="background:white;">
-        <td style="padding:12px 18px;">Gastos Administrativos</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-gastosAdmin">$0</td>
-      </tr>
-
-      <tr style="background:white;">
-        <td style="padding:12px 18px;">Gastos de Venta</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-gastosVenta">$0</td>
-      </tr>
-
-      <tr style="background:white;">
-        <td style="padding:12px 18px;">Gastos de Mercadotecnia</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-gastosMkt">$0</td>
-      </tr>
-
-      <tr style="background:white;">
-        <td style="padding:12px 18px;">Gastos de Nómina</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-nomina">$0</td>
-      </tr>
-
-      <!-- ===== OTROS GASTOS / INGRESOS ===== -->
-      <tr style="background:white;">
-        <td style="padding:12px 18px;">Depreciación</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-depreciacion">$0</td>
-      </tr>
-
-      <tr style="background:white;">
-        <td style="padding:12px 18px;">Amortización</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-amortizacion">$0</td>
-      </tr>
-
-      <tr style="background:white;">
-        <td style="padding:12px 18px;">Otros Gastos</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-otrosGastos">$0</td>
-      </tr>
-
-      <tr style="background:white;">
-        <td style="padding:12px 18px;">Otros Ingresos</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-otrosIngresos">$0</td>
-      </tr>
-
-      <!-- ===== RESULTADO OPERATIVO ===== -->
-      <tr style="background:#eef2f7; font-weight:600;">
-        <td style="padding:12px 18px;">Utilidad Operativa</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-utilidadOperativa">$0</td>
-      </tr>
-
-      <!-- ===== RESULTADOS FINANCIEROS ===== -->
-      <tr style="background:white;">
-        <td style="padding:12px 18px;">Intereses Pagados</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-interesesPagados">$0</td>
-      </tr>
-
-      <tr style="background:white;">
-        <td style="padding:12px 18px;">Intereses Ganados</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-interesesGanados">$0</td>
-      </tr>
-
-      <!-- ===== UTILIDAD ANTES DE IMPUESTOS ===== -->
-      <tr style="background:#eef2f7; font-weight:600;">
-        <td style="padding:12px 18px;">Utilidad Antes de Impuestos</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-uai">$0</td>
-      </tr>
-
-      <!-- ===== IMPUESTOS ===== -->
-      <tr style="background:white;">
-        <td style="padding:12px 18px;">ISR</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-isr">$0</td>
-      </tr>
-
-      <tr style="background:white;">
-        <td style="padding:12px 18px;">PTU</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-ptu">$0</td>
-      </tr>
-
-      <!-- ===== UTILIDAD NETA ===== -->
-      <tr style="background:#dce4ee; font-weight:700;">
-        <td style="padding:12px 18px;">Utilidad Neta</td>
-        <td style="padding:12px 18px; text-align:right;" id="er-utilidadNeta">$0</td>
-      </tr>
-
-    </tbody>
-  </table>
-</div>
-
-<script type="module">
-  import supabase from '../supabase.js'
-
-  const logoutBtn = document.getElementById('logout-btn')
-
-  logoutBtn.addEventListener('click', async () => {
-    await supabase.auth.signOut()
-    window.location.href = '/login.html'
-  })
-</script>
-
-  <!-- MODAL -->
-<div id="dataModal" class="modal-overlay" style="display:none">
-
-  <div class="modal-box">
-
-    <h3>Agregar Datos</h3>
-
-<label>Cuenta:</label>
-<select id="cuenta">
-  <option value="" selected disabled hidden>Selecciona una opción</option>
-  <option>Ventas</option>
-  <option>Costo de Ventas</option>
-  <option>Gasto</option>
-  <option>Gasto Financiero</option>
-  <option>Impuestos</option>
-</select>
-
-<label>Monto ($):</label>
-<input 
-  id="monto"
-  type="number" 
-  placeholder="Ej. 15000" 
-  style="
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid #e2e8f0;
-    margin-bottom: 10px;
-  "
->
-
-<label>Fecha:</label>
-<input 
-  id="fecha"
-  type="date"
-  style="
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid #e2e8f0;
-    margin-bottom: 10px;
-  "
->
-    
-    <button id="cargarBtn" class="load-btn">Cargar</button>
-
-  </div>
-
-</div>
-
-<style>
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.45);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-
-  .modal-box {
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    width: 320px;
-    text-align: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-    animation: pop 0.25s ease;
-  }
-
-  @keyframes pop {
-    from { transform: scale(0.9); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-
-  .modal-box h3 {
-    margin-bottom: 20px;
-  }
-
-  .modal-box label {
-    display: block;
-    text-align: left;
-    margin: 12px 0 6px;
-    font-size: 14px;
-    font-weight: 500;
-  }
-
-  .modal-box select {
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid #e2e8f0;
-    margin-bottom: 10px;
-  }
-
-  .load-btn {
-    width: 100%;
-    padding: 12px;
-    border-radius: 12px;
-    border: none;
-    background: #0f766e;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-
-  .load-btn:hover {
-    background: #115e59;
-  }
-</style>
-
-<script>
-  const modal = document.getElementById("dataModal")
-  const openBtn = document.getElementById("openModal")
-
-  const cuenta = document.getElementById("cuenta")
-  const monto = document.getElementById("monto")
-  const fecha = document.getElementById("fecha")
-
-
-  // Abrir modal
-  openBtn.addEventListener("click", (e) => {
-    e.preventDefault()
-
-    // Mostrar el modal
-    modal.style.display = "flex"
-
-    // Limpiar los campos
-    cuenta.value = ""
-    monto.value = ""
-    // Fecha default = HOY (en formato YYYY-MM-DD)
-const hoy = new Date().toISOString().split("T")[0]
-fecha.value = hoy
-  })
-
-  // Cerrar si haces clic afuera de la caja
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      modal.style.display = "none"
-    }
-  })
-</script>
-
-<script type="module">
-import supabase from '../supabase.js'
-
-const cargarBtn = document.getElementById("cargarBtn")
-const cuenta = document.getElementById("cuenta")
-const monto = document.getElementById("monto")
-const fecha = document.getElementById("fecha")
-
-cargarBtn.addEventListener("click", async () => {
-
-  if (!cuenta.value || !monto.value || !fecha.value) {
-    alert("Completa todos los campos")
-    return
-  }
-
-  // Obtener sesión
-  const { data: { session }, error: sessionError } = await supabase.auth.getSession()
-
-  if (!session) {
-    alert("Sesión no encontrada")
-    return
-  }
-
-  // Insertar datos
-  const { error } = await supabase
-    .from("carton_data")
-    .insert({
-      cuenta: cuenta.value,
-      monto: Number(monto.value),
-      fecha: fecha.value,
-      user_email: session.user.email
-    })
-
-  if (error) {
-    console.error("Error Supabase:", error)
-    alert("Error al guardar los datos")
-    return
-  }
-
-  alert("Datos guardados correctamente 🎉")
-  document.getElementById("dataModal").style.display = "none"
-})
-</script>
+    <header style="
+        width: 100%;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding: 0.5rem 5%;
+        background: #111827;
+        border-bottom: 1px solid #1f2937;
+    ">
+        <a href="/brands/carton.html">
+            <img src="../demologo.svg" alt="Velium Logo" style="height:4.5rem; margin-left: -2.3rem">
+        </a>
+
+        <nav style="display:flex; gap:30px; font-size:0.95rem;align-items:center; margin-top:6px; margin-left: 70px">
+            <a href="/brands/carton.html" style="color:#F9FAFB; text-decoration:none;">Dashboard</a>
+            <a href="#" id="openModal" style="color:#F9FAFB; text-decoration:none;">Agregar Datos</a>
+            <a href="#" style="color:#F9FAFB; text-decoration:none;">Simulador</a>
+            <a href="/brands/estado_resultados.html" style="color:#F9FAFB; text-decoration:none;">Estado de Resultados</a>
+            <a href="#" style="color:#F9FAFB; text-decoration:none;">Balance General</a>
+            <a href="#" style="color:#F9FAFB; text-decoration:none;">Cashflow</a>
+
+            <a href="#" id="logout-btn" class="login-btn">Logout</a>
+        </nav>
+    </header>
+
+    <!-- ============================ ESTADO DE RESULTADOS VIEW =============================== -->
+
+    <div id="estadoResultados" style="padding: 40px 6%; display:block">
+
+        <div style="text-align:center; margin-bottom: 40px;">
+            <h2 style="
+                font-size: 2.4rem;
+                font-weight: 800;
+                color: #0f172a;
+                letter-spacing: -0.5px;
+            ">
+                Estado de Resultados
+            </h2>
+
+            <p style="color:#475569; font-size: 1rem; margin-top: 8px;">
+                Resumen financiero por periodo seleccionado
+            </p>
+        </div>
+
+        <!-- FILTROS DE FECHA -->
+        <div style="
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-bottom: 30px;
+            align-items: flex-start;
+        ">
+            <!-- FECHAS + BOTÓN -->
+            <div style="display:flex; gap:20px; align-items:flex-end;">
+                <div>
+                    <label style="font-size:14px; font-weight:600;">Fecha Inicial</label><br>
+                    <input type="date" id="fechaInicio" style="
+                        padding:8px 12px;
+                        border-radius:10px;
+                        border:1px solid #cbd5e1;
+                        min-width:160px;
+                    ">
+                </div>
+
+                <div>
+                    <label style="font-size:14px; font-weight:600;">Fecha Final</label><br>
+                    <input type="date" id="fechaFinal" style="
+                        padding:8px 12px;
+                        border-radius:10px;
+                        border:1px solid #cbd5e1;
+                        min-width:160px;
+                    ">
+                </div>
+
+                <button id="actualizarBtn" style="
+                    padding:10px 18px;
+                    border-radius:12px;
+                    background:#0f766e;
+                    color:white;
+                    font-weight:600;
+                    border:none;
+                    cursor:pointer;
+                    height:42px;
+                    transform: translateY(2px);
+                ">
+                    Actualizar
+                </button>
+            </div>
+
+            <table class="tabla-estado-resultados">
+                <tbody>
+                    <!-- TABLA CENTRADA Y MÁS ANCHA -->
+                    <div style="
+                        background: white;
+                        border-radius: 18px;
+                        padding: 32px 40px;
+                        width: 97%;
+                        max-width: 1200px;
+                        margin-top: 10px;
+                        box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+                        border: 1px solid #e2e8f0;
+                    ">
+
+                        <table style="width: 100%; border-collapse: separate; border-spacing: 0 10px; font-size: 15px;">
+                            <thead>
+                                <tr style="color:#475569; text-transform:uppercase; font-size:13px; letter-spacing:0.5px;">
+                                    <th style="padding-bottom: 12px; text-align:left;">Cuenta</th>
+                                    <th style="padding-bottom: 12px; text-align:right;">Monto ($)</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tablaER">
+
+                                <!-- ===== INGRESOS ===== -->
+                                <tr style="background:#f8fafc;">
+                                    <td style="padding:12px 18px;"><strong>Ventas Netas</strong></td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-ventas">$0</td>
+                                </tr>
+
+                                <tr style="background:white;">
+                                    <td style="padding:12px 18px;">Ingresos por Servicios</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-servicios">$0</td>
+                                </tr>
+
+                                <tr style="background:white;">
+                                    <td style="padding:12px 18px;">Otros Ingresos Operativos</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-otrosIngresosOp">$0</td>
+                                </tr>
+
+                                <!-- ===== COSTOS ===== -->
+                                <tr style="background:white;">
+                                    <td style="padding:12px 18px;">Costo de Ventas</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-costoVentas">$0</td>
+                                </tr>
+
+                                <tr style="background:white;">
+                                    <td style="padding:12px 18px;">Costo de Servicios</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-costoServicios">$0</td>
+                                </tr>
+
+                                <!-- ===== UTILIDAD BRUTA ===== -->
+                                <tr style="background:#eef2f7; font-weight:600;">
+                                    <td style="padding:12px 18px;">Utilidad Bruta</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-utilidadBruta">$0</td>
+                                </tr>
+
+                                <!-- ===== GASTOS OPERATIVOS ===== -->
+                                <tr style="background:white;">
+                                    <td style="padding:12px 18px;">Gastos Operativos</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-gastosOperativos">$0</td>
+                                </tr>
+
+                                <tr style="background:white;">
+                                    <td style="padding:12px 18px;">Gastos Administrativos</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-gastosAdmin">$0</td>
+                                </tr>
+
+                                <tr style="background:white;">
+                                    <td style="padding:12px 18px;">Gastos de Venta</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-gastosVenta">$0</td>
+                                </tr>
+
+                                <tr style="background:white;">
+                                    <td style="padding:12px 18px;">Gastos de Mercadotecnia</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-gastosMkt">$0</td>
+                                </tr>
+
+                                <tr style="background:white;">
+                                    <td style="padding:12px 18px;">Gastos de Nómina</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-nomina">$0</td>
+                                </tr>
+
+                                <!-- ===== OTROS GASTOS / INGRESOS ===== -->
+                                <tr style="background:white;">
+                                    <td style="padding:12px 18px;">Depreciación</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-depreciacion">$0</td>
+                                </tr>
+
+                                <tr style="background:white;">
+                                    <td style="padding:12px 18px;">Amortización</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-amortizacion">$0</td>
+                                </tr>
+
+                                <tr style="background:white;">
+                                    <td style="padding:12px 18px;">Otros Gastos</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-otrosGastos">$0</td>
+                                </tr>
+
+                                <tr style="background:white;">
+                                    <td style="padding:12px 18px;">Otros Ingresos</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-otrosIngresos">$0</td>
+                                </tr>
+
+                                <!-- ===== RESULTADO OPERATIVO ===== -->
+                                <tr style="background:#eef2f7; font-weight:600;">
+                                    <td style="padding:12px 18px;">Utilidad Operativa</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-utilidadOperativa">$0</td>
+                                </tr>
+
+                                <!-- ===== RESULTADOS FINANCIEROS ===== -->
+                                <tr style="background:white;">
+                                    <td style="padding:12px 18px;">Intereses Pagados</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-interesesPagados">$0</td>
+                                </tr>
+
+                                <tr style="background:white;">
+                                    <td style="padding:12px 18px;">Intereses Ganados</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-interesesGanados">$0</td>
+                                </tr>
+
+                                <!-- ===== UTILIDAD ANTES DE IMPUESTOS ===== -->
+                                <tr style="background:#eef2f7; font-weight:600;">
+                                    <td style="padding:12px 18px;">Utilidad Antes de Impuestos</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-uai">$0</td>
+                                </tr>
+
+                                <!-- ===== IMPUESTOS ===== -->
+                                <tr style="background:white;">
+                                    <td style="padding:12px 18px;">ISR</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-isr">$0</td>
+                                </tr>
+
+                                <tr style="background:white;">
+                                    <td style="padding:12px 18px;">PTU</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-ptu">$0</td>
+                                </tr>
+
+                                <!-- ===== UTILIDAD NETA ===== -->
+                                <tr style="background:#dce4ee; font-weight:700;">
+                                    <td style="padding:12px 18px;">Utilidad Neta</td>
+                                    <td style="padding:12px 18px; text-align:right;" id="er-utilidadNeta">$0</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </tbody>
+            </table>
+        </div>
+
+        <script type="module">
+            import supabase from '../supabase.js'
+
+            const logoutBtn = document.getElementById('logout-btn')
+
+            logoutBtn.addEventListener('click', async () => {
+                await supabase.auth.signOut()
+                window.location.href = '/login.html'
+            })
+        </script>
+
+        <!-- MODAL -->
+        <div id="dataModal" class="modal-overlay" style="display:none">
+            <div class="modal-box">
+                <h3>Agregar Datos</h3>
+
+                <label>Cuenta:</label>
+                <select id="cuenta">
+                    <option value="" selected disabled hidden>Selecciona una opción</option>
+                    <option>Ventas</option>
+                    <option>Costo de Ventas</option>
+                    <option>Gasto</option>
+                    <option>Gasto Financiero</option>
+                    <option>Impuestos</option>
+                </select>
+
+                <label>Monto ($):</label>
+                <input id="monto" type="number" placeholder="Ej. 15000" style="
+                    width: 100%;
+                    padding: 10px 12px;
+                    border-radius: 10px;
+                    border: 1px solid #e2e8f0;
+                    margin-bottom: 10px;
+                ">
+
+                <label>Fecha:</label>
+                <input id="fecha" type="date" style="
+                    width: 100%;
+                    padding: 10px 12px;
+                    border-radius: 10px;
+                    border: 1px solid #e2e8f0;
+                    margin-bottom: 10px;
+                ">
+
+                <button id="cargarBtn" class="load-btn">Cargar</button>
+            </div>
+        </div>
+
+        <style>
+            .modal-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(15, 23, 42, 0.45);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            }
+
+            .modal-box {
+                background: white;
+                padding: 30px;
+                border-radius: 20px;
+                width: 320px;
+                text-align: center;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+                animation: pop 0.25s ease;
+            }
+
+            @keyframes pop {
+                from {
+                    transform: scale(0.9);
+                    opacity: 0;
+                }
+
+                to {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+
+            .modal-box h3 {
+                margin-bottom: 20px;
+            }
+
+            .modal-box label {
+                display: block;
+                text-align: left;
+                margin: 12px 0 6px;
+                font-size: 14px;
+                font-weight: 500;
+            }
+
+            .modal-box select {
+                width: 100%;
+                padding: 10px 12px;
+                border-radius: 10px;
+                border: 1px solid #e2e8f0;
+                margin-bottom: 10px;
+            }
+
+            .load-btn {
+                width: 100%;
+                padding: 12px;
+                border-radius: 12px;
+                border: none;
+                background: #0f766e;
+                color: white;
+                font-weight: 600;
+                cursor: pointer;
+                margin-top: 10px;
+            }
+
+            .load-btn:hover {
+                background: #115e59;
+            }
+        </style>
+
+        <script>
+            const modal = document.getElementById("dataModal")
+            const openBtn = document.getElementById("openModal")
+            const cuenta = document.getElementById("cuenta")
+            const monto = document.getElementById("monto")
+            const fecha = document.getElementById("fecha")
+
+            // Abrir modal
+            openBtn.addEventListener("click", (e) => {
+                e.preventDefault()
+
+                modal.style.display = "flex"
+
+                cuenta.value = ""
+                monto.value = ""
+
+                const hoy = new Date().toISOString().split("T")[0]
+                fecha.value = hoy
+            })
+
+            // Cerrar si haces clic afuera
+            modal.addEventListener("click", (e) => {
+                if (e.target === modal) {
+                    modal.style.display = "none"
+                }
+            })
+        </script>
+
+        <script type="module">
+            import supabase from '../supabase.js'
+
+            const cargarBtn = document.getElementById("cargarBtn")
+            const cuenta = document.getElementById("cuenta")
+            const monto = document.getElementById("monto")
+            const fecha = document.getElementById("fecha")
+
+            cargarBtn.addEventListener("click", async () => {
+                if (!cuenta.value || !monto.value || !fecha.value) {
+                    alert("Completa todos los campos")
+                    return
+                }
+
+                const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+                if (!session) {
+                    alert("Sesión no encontrada")
+                    return
+                }
+
+                const { error } = await supabase
+                    .from("carton_data")
+                    .insert({
+                        cuenta: cuenta.value,
+                        monto: Number(monto.value),
+                        fecha: fecha.value,
+                        user_email: session.user.email
+                    })
+
+                if (error) {
+                    console.error("Error Supabase:", error)
+                    alert("Error al guardar los datos")
+                    return
+                }
+
+                alert("Datos guardados correctamente 🎉")
+                document.getElementById("dataModal").style.display = "none"
+            })
+        </script>
 
 </body>
+
 </html>
+
