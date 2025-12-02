@@ -101,6 +101,79 @@
     <a href="#" style="color:#F9FAFB; text-decoration:none;">Cashflow</a>
     <a href="#" id="logout-btn" class="login-btn">Logout</a>
   </nav>
+
+  </header>
+
+<!-- ============================
+     ESTADO DE RESULTADOS VIEW
+=============================== -->
+<div id="estadoResultados" style="padding: 40px 6%; display:none">
+
+  <h2 style="
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 25px;
+      color: #0f172a;
+  ">
+    Estado de Resultados
+  </h2>
+
+  <!-- BOTONES Y-Q-M -->
+  <div style="display: flex; gap: 12px; margin-bottom: 25px;">
+      <button class="freq-btn" data-freq="Y">Y (Anual)</button>
+      <button class="freq-btn" data-freq="Q">Q (Trimestral)</button>
+      <button class="freq-btn" data-freq="M">M (Mensual)</button>
+  </div>
+
+  <!-- TABLA -->
+  <div style="
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+      border: 1px solid #e2e8f0;
+  ">
+    <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+      <thead>
+        <tr style="text-align: left; color:#475569;">
+          <th style="padding-bottom: 12px;">Cuenta</th>
+          <th style="padding-bottom: 12px; text-align:right;">Monto ($)</th>
+        </tr>
+      </thead>
+
+      <tbody id="tablaER">
+
+        <!-- Categorías base -->
+        <tr><td><strong>Ventas</strong></td><td style="text-align:right;" id="er-ventas">$0</td></tr>
+
+        <tr><td>Costo de Ventas</td><td style="text-align:right;" id="er-costo">$0</td></tr>
+
+        <tr><td style="padding-top:15px;"><strong>Utilidad Bruta</strong></td>
+            <td style="text-align:right; padding-top:15px;" id="er-utilidadBruta">$0</td>
+        </tr>
+
+        <!-- Categorías sugeridas para muy pro -->
+        <tr><td>Gastos Operativos</td><td style="text-align:right;" id="er-gastosOp">$0</td></tr>
+        <tr><td>Gastos Administrativos</td><td style="text-align:right;" id="er-gastosAdmin">$0</td></tr>
+        <tr><td>Publicidad y Marketing</td><td style="text-align:right;" id="er-marketing">$0</td></tr>
+        <tr><td>Gastos Financieros</td><td style="text-align:right;" id="er-financieros">$0</td></tr>
+
+        <tr><td style="padding-top:15px;"><strong>Utilidad Operativa</strong></td>
+            <td style="text-align:right; padding-top:15px;" id="er-utilidadOperativa">$0</td>
+        </tr>
+
+        <tr><td>Impuestos</td><td style="text-align:right;" id="er-impuestos">$0</td></tr>
+
+        <tr><td style="padding-top:15px;"><strong>Utilidad Neta</strong></td>
+            <td style="text-align:right; padding-top:15px;" id="er-utilidadNeta">$0</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
 </header>
 
 <script type="module">
