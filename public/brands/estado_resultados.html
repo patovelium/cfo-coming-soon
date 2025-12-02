@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Velium | Estado de Resultados</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: Inter, sans-serif;
+      background: #F8FAFC;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 900px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 25px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      color: #0f172a;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .switcher {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .switcher button {
+      padding: 10px 20px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      background: #fff;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .switcher button.active {
+      background: #0f766e;
+      color: white;
+      border-color: #0f766e;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    td {
+      padding: 14px 10px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 1rem;
+    }
+
+    .label {
+      color: #475569;
+      font-weight: 600;
+    }
+
+    .value {
+      text-align: right;
+      font-weight: 700;
+      color: #0f172a;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Estado de Resultados</h1>
+
+  <div class="switcher">
+    <button id="btnY">Y</button>
+    <button id="btnQ">Q</button>
+    <button id="btnM">M</button>
+  </div>
+
+  <table>
+    <tr>
+      <td class="label">Ventas</td>
+      <td class="value" id="ventas">$0</td>
+    </tr>
+
+    <tr>
+      <td class="label">Costo de Ventas</td>
+      <td class="value" id="costoVentas">$0</td>
+    </tr>
+
+    <tr>
+      <td class="label">Utilidad Bruta</td>
+      <td class="value" id="utilidadBruta">$0</td>
+    </tr>
+  </table>
+</div>
+
+<script type="module">
+  import supabase from "../supabase.js"
+
+  const ventasEl = document.getElementById("ventas")
+  const costoEl = document.getElementById("costoVentas")
+  const utilidadEl = document.getElementById("utilidadBruta")
+
+  const btnY = document.getElementById("btnY")
+  const btnQ = document.getElementById("btnQ")
+  const btnM = document.getElementById("btnM")
+
+  async function loadData(mode) {
+    // activar botón correcto
+    document.querySelectorAll(".switcher button").forEach(b => b.classList.remove("active"))
+    document.getElementById("btn" + mode).classList.add("active")
+
+    const { data: { session } } = await supabase.auth.getSession()
+    const email = session.user.email
+
+    // calculamos rango
+    const today = new Date()
+    const year = today.getFullYear()
+    const month = today.getMonth() + 1
+
+    let startDate, endDate
+
+    if (mode === "Y") {
+      startDate = `${year}-01-01`
+      endDate = `${year}-12-31`
+    }
+
+    if (mode === "M") {
+      startDate = `${year}-${String(month).padStart(2, "0")}-01`
+      endDate = `${year}-${String(month).padStart(2, "0")}-31`
+    }
+
+    if (mode === "Q") {
+      const quarterStart = Math.floor((month - 1) / 3) * 3 + 1
+      const quarterEnd = quarterStart + 2
+
+      startDate = `${year}-${String(quarterStart).padStart(2, "0")}-01`
+      endDate = `${year}-${String(quarterEnd).padStart(2, "0")}-31`
+    }
+
+    // obtenemos datos
+    const { data, error } = await supabase
+      .from("carton_data")
+      .select("*")
+      .eq("user_email", email)
+      .gte("fecha", startDate)
+      .lte("fecha", endDate)
+
+    if (error) {
+      console.error(error)
+      return
+    }
+
+    // procesamos
+    let ventas = 0
+    let costo = 0
+
+    data.forEach(row => {
+      if (row.cuenta === "Ventas") ventas += Number(row.monto)
+      if (row.cuenta === "Costo de Ventas") costo += Number(row.monto)
+    })
+
+    ventasEl.textContent = "$" + ventas.toLocaleString()
+    costoEl.textContent = "$" + costo.toLocaleString()
+    utilidadEl.textContent = "$" + (ventas - costo).toLocaleString()
+  }
+
+  // listeners
+  btnY.onclick = () => loadData("Y")
+  btnQ.onclick = () => loadData("Q")
+  btnM.onclick = () => loadData("M")
+
+  // default = Año
+  loadData("Y")
+</script>
+
+</body>
+</html>
