@@ -75,12 +75,32 @@
       transform: translateY(-6px);
       box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
+    .filter-btn {
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.filter-btn:hover {
+  background: #f1f5f9;
+}
+
+.filter-btn.active {
+  background: #0f766e;
+  color: white;
+  border-color: #0f766e;
+}
   </style>
 </head>
 
 <body>
 
 <header style="
+  width: 100%;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -116,6 +136,44 @@
   ">
     Estado de Resultados
   </h2>
+<!-- FILTROS DE FECHA -->
+<div style="
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+">
+
+  <!-- FECHAS -->
+  <div style="display:flex; gap: 15px; align-items:center;">
+      <div>
+          <label style="font-size:14px; font-weight:600;">Fecha Inicial</label><br>
+          <input type="date" id="fechaInicio" style="
+              padding:8px 12px;
+              border-radius:10px;
+              border:1px solid #cbd5e1;
+          ">
+      </div>
+
+      <div>
+          <label style="font-size:14px; font-weight:600;">Fecha Final</label><br>
+          <input type="date" id="fechaFinal" style="
+              padding:8px 12px;
+              border-radius:10px;
+              border:1px solid #cbd5e1;
+          ">
+      </div>
+  </div>
+
+  <!-- FRECUENCIAS (Y Q M) -->
+  <div style="display: flex; gap: 12px; margin-top:10px;">
+      <button class="filter-btn" data-freq="Y">Y (Anual)</button>
+      <button class="filter-btn" data-freq="Q">Q (Trimestral)</button>
+      <button class="filter-btn" data-freq="M">M (Mensual)</button>
+  </div>
+
+</div>
 
   <!-- BOTONES Y-Q-M -->
   <div style="display: flex; gap: 12px; margin-bottom: 25px;">
@@ -169,8 +227,6 @@
   </div>
 
 </div>
-
-</header>
 
 <script type="module">
   import supabase from '../supabase.js'
