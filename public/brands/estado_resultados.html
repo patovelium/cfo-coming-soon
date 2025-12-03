@@ -353,25 +353,42 @@
                 <h3>Agregar Datos</h3>
 
                 <label>Cuenta:</label>
-                <select id="cuenta">
-                    <option value="" selected disabled hidden>Selecciona una opción</option>
-                    <option>Ventas</option>
-                    <option>Costo de Ventas</option>
-                    <option>Ingresos por Servicios</option>
-                    <option>Otros Ingresos</option>
-                    <option>Gastos Operativos</option>
-                    <option>Gastos Administrativos</option>
-                    <option>Gastos por Marketing</option>
-                    <option>Gastos de Nómina</option>
-                    <option>Depreciación</option>
-                    <option>Amortización</option>
-                    <option>Otros Gastos</option>
-                    <option>Intereses Pagados</option>
-                    <option>Intereses Ganados</option>
-                    <option>ISR</option>
-                    <option>PTU</option>
-                    <option>Gasto Financiero</option>
-                </select>
+              <select id="cuenta">
+    <option value="" selected disabled hidden>Selecciona una opción</option>
+
+    <!-- INGRESOS -->
+    <option>Ventas</option>
+    <option>Ingresos por Servicios</option>
+    <option>Otros Ingresos Operativos</option>
+    <option>Otros Ingresos</option>
+
+    <!-- COSTOS -->
+    <option>Costo de Ventas</option>
+    <option>Costo de Servicios</option>
+
+    <!-- GASTOS -->
+    <option>Gastos Operativos</option>
+    <option>Gastos Administrativos</option>
+    <option>Gastos de Venta</option>
+    <option>Gastos de Mercadotecnia</option>
+    <option>Gastos de Nómina</option>
+
+    <!-- DEPRE / AMORT -->
+    <option>Depreciación</option>
+    <option>Amortización</option>
+
+    <!-- OTROS GASTOS -->
+    <option>Otros Gastos</option>
+
+    <!-- FINANCIEROS -->
+    <option>Intereses Pagados</option>
+    <option>Intereses Ganados</option>
+
+    <!-- IMPUESTOS -->
+    <option>ISR</option>
+    <option>PTU</option>
+</select>
+
 
                 <label>Monto ($):</label>
                 <input id="monto" type="number" placeholder="Ej. 15000" style="
@@ -582,9 +599,11 @@ function clasificarCuenta(cuenta) {
         case "Ingresos por Servicios":
             return "servicios";
 
-        case "Otros Ingresos":
         case "Otros Ingresos Operativos":
             return "otrosIngresosOp";
+
+        case "Otros Ingresos":
+            return "otrosIngresos";
 
         // COSTOS
         case "Costo de Ventas":
@@ -603,26 +622,25 @@ function clasificarCuenta(cuenta) {
         case "Gastos de Venta":
             return "gastosVenta";
 
-        case "Gastos por Marketing":
+        case "Gastos de Mercadotecnia":
             return "gastosMkt";
 
         case "Gastos de Nómina":
             return "nomina";
 
-        // DEPRE + AMORT
+        // DEPRECIACIÓN / AMORT
         case "Depreciación":
             return "depreciacion";
 
         case "Amortización":
             return "amortizacion";
 
-        // OTROS
+        // OTROS GASTOS
         case "Otros Gastos":
             return "otrosGastos";
 
         // RESULTADOS FINANCIEROS
         case "Intereses Pagados":
-        case "Gasto Financiero":
             return "interesesPagados";
 
         case "Intereses Ganados":
@@ -634,10 +652,13 @@ function clasificarCuenta(cuenta) {
 
         case "PTU":
             return "ptu";
-    }
 
-    return null;
+        default:
+            console.warn("Cuenta no reconocida:", cuenta);
+            return null;
+    }
 }
+
 
 
 // === FUNCIÓN PRINCIPAL PARA CARGAR EL ESTADO DE RESULTADOS ===
