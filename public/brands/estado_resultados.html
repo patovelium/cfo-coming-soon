@@ -665,11 +665,14 @@ async function cargarEstado() {
     const { data: { session } } = await supabase.auth.getSession()
     if (!session) return;
 
-    const { data, error } = await supabase
-        .from("carton_data")
-        .select("*")
-        .eq("user_email", session.user.email)
-        .order("fecha", { ascending: true });
+    console.log("Email:", session.user.email)
+
+const { data, error } = await supabase
+    .from("carton_data")
+    .select("*")
+    .order("fecha", { ascending: true });
+
+console.log("Datos sin filtrar:", data); 
 
     if (error) {
         console.error(error);
