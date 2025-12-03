@@ -574,23 +574,74 @@ const campos = {
     utilidadNeta: "er-utilidadNeta",
 }
 
-// === MAPEO DE CUENTAS CON TUS DROPDOWNS ===
 function clasificarCuenta(cuenta) {
-    cuenta = cuenta.toLowerCase()
+    switch (cuenta) {
 
-    if (cuenta.includes("venta")) return "ventas"
-    if (cuenta.includes("servicio")) return "servicios"
-    if (cuenta.includes("costo") && cuenta.includes("venta")) return "costoVentas"
-    if (cuenta.includes("costo") && cuenta.includes("servicio")) return "costoServicios"
-    if (cuenta.includes("gasto") && cuenta.includes("admin")) return "gastosAdmin"
-    if (cuenta.includes("gasto") && cuenta.includes("venta")) return "gastosVenta"
-    if (cuenta.includes("gasto") && cuenta.includes("mkt")) return "gastosMkt"
-    if (cuenta.includes("gasto")) return "gastosOperativos"
-    if (cuenta.includes("financ")) return "interesesPagados"
-    if (cuenta.includes("impuesto")) return "isr"
+        // INGRESOS
+        case "Ventas":
+        case "Ventas Netas":
+            return "ventas";
 
-    return null
+        case "Ingresos por Servicios":
+            return "servicios";
+
+        case "Otros Ingresos":
+        case "Otros Ingresos Operativos":
+            return "otrosIngresosOp";
+
+        // COSTOS
+        case "Costo de Ventas":
+            return "costoVentas";
+
+        case "Costo de Servicios":
+            return "costoServicios";
+
+        // GASTOS
+        case "Gastos Operativos":
+            return "gastosOperativos";
+
+        case "Gastos Administrativos":
+            return "gastosAdmin";
+
+        case "Gastos de Venta":
+            return "gastosVenta";
+
+        case "Gastos por Marketing":
+            return "gastosMkt";
+
+        case "Gastos de Nómina":
+            return "nomina";
+
+        // DEPRE + AMORT
+        case "Depreciación":
+            return "depreciacion";
+
+        case "Amortización":
+            return "amortizacion";
+
+        // OTROS
+        case "Otros Gastos":
+            return "otrosGastos";
+
+        // RESULTADOS FINANCIEROS
+        case "Intereses Pagados":
+        case "Gasto Financiero":
+            return "interesesPagados";
+
+        case "Intereses Ganados":
+            return "interesesGanados";
+
+        // IMPUESTOS
+        case "ISR":
+            return "isr";
+
+        case "PTU":
+            return "ptu";
+    }
+
+    return null;
 }
+
 
 // === FUNCIÓN PRINCIPAL PARA CARGAR EL ESTADO DE RESULTADOS ===
 async function cargarEstado() {
