@@ -661,23 +661,22 @@ function clasificarCuenta(cuenta) {
 
 // === FUNCIÓN PRINCIPAL PARA CARGAR EL ESTADO DE RESULTADOS ===
 async function cargarEstado() {
-    const data = await obtenerDatos();
-    console.log(data);
-}
-
     const { data: { session } } = await supabase.auth.getSession()
-    if (!session) return
+    if (!session) return;
 
     const { data, error } = await supabase
         .from("carton_data")
         .select("*")
         .eq("user_email", session.user.email)
-        .order("fecha", { ascending: true })
+        .order("fecha", { ascending: true });
 
     if (error) {
-        console.error(error)
-        return
+        console.error(error);
+        return;
     }
+
+    console.log(data);
+}
 
     // --- FILTRAR POR FECHA ---
     const inicio = fechaInicio.value ? new Date(fechaInicio.value) : null
