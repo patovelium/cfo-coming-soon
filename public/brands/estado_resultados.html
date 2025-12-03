@@ -360,9 +360,20 @@
                     <option value="" selected disabled hidden>Selecciona una opción</option>
                     <option>Ventas</option>
                     <option>Costo de Ventas</option>
-                    <option>Gasto</option>
+                    <option>Ingresos por Servicios</option>
+                    <option>Otros Ingresos</option>
+                    <option>Gastos Operativos</option>
+                    <option>Gastos Administrativos</option>
+                    <option>Gastos por Marketing</option>
+                    <option>Gastos de Nómina</option>
+                    <option>Depreciación</option>
+                    <option>Amortización</option>
+                    <option>Otros Gastos</option>
+                    <option>Intereses Pagados</option>
+                    <option>Intereses Ganados</option>
+                    <option>ISR</option>
+                    <option>PTU</option>
                     <option>Gasto Financiero</option>
-                    <option>Impuestos</option>
                 </select>
 
                 <label>Monto ($):</label>
@@ -524,6 +535,127 @@
                 document.getElementById("dataModal").style.display = "none"
             })
         </script>
+
+        <script type="module">
+import supabase from '../supabase.js'
+
+const fechaInicio = document.getElementById("fechaInicio")
+const fechaFinal = document.getElementById("fechaFinal")
+const actualizarBtn = document.getElementById("actualizarBtn")
+
+// === IDs de la tabla ===
+const campos = {
+    ventas: "er-ventas",
+    servicios: "er-servicios",
+    otrosIngresosOp: "er-otrosIngresosOp",
+
+    costoVentas: "er-costoVentas",
+    costoServicios: "er-costoServicios",
+
+    gastosOperativos: "er-gastosOperativos",
+    gastosAdmin: "er-gastosAdmin",
+    gastosVenta: "er-gastosVenta",
+    gastosMkt: "er-gastosMkt",
+    nomina: "er-nomina",
+
+    depreciacion: "er-depreciacion",
+    amortizacion: "er-amortizacion",
+    otrosGastos: "er-otrosGastos",
+    otrosIngresos: "er-otrosIngresos",
+
+    interesesPagados: "er-interesesPagados",
+    interesesGanados: "er-interesesGanados",
+    isr: "er-isr",
+    ptu: "er-ptu",
+
+    utilidadBruta: "er-utilidadBruta",
+    utilidadOperativa: "er-utilidadOperativa",
+    uai: "er-uai",
+    utilidadNeta: "er-utilidadNeta",
+}
+
+// === MAPEO DE CUENTAS CON TUS DROPDOWNS ===
+function clasificarCuenta(cuenta) {
+    cuenta = cuenta.toLowerCase()
+
+    if (cuenta.includes("venta")) return "ventas"
+    if (cuenta.includes("servicio")) return "servicios"
+    if (cuenta.includes("costo") && cuenta.includes("venta")) return "costoVentas"
+    if (cuenta.includes("costo") && cuenta.includes("servicio")) return "costoServicios"
+    if (cuenta.includes("gasto") && cuenta.includes("admin")) return "gastosAdmin"
+    if (cuenta.includes("gasto") && cuenta.includes("venta")) return "gastosVenta"
+    if (cuenta.includes("gasto") && cuenta.includes("mkt")) return "gastosMkt"
+    if (cuenta.includes("gasto")) return "gastosOperativos"
+    if (cuenta.includes("financ")) return "interesesPagados"
+    if (cuenta.includes("impuesto")) return "isr"
+
+    return null
+}
+
+// === FUNCIÓN PRINCIPAL PARA CARGAR EL ESTADO DE RESULTADOS ===
+async function cargarEstado() {
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session) return
+
+    const { data, error } = await supabase
+        .from("carton_data")
+        .select("*")
+        .eq("user_email", session.user.email)
+        .order("fecha", { ascending: true })
+
+    if (error) {
+        console.error(error)
+        return
+    }
+
+    // --- FILTRAR POR FECHA ---
+    const inicio = fechaInicio.value ? new Date(fechaInicio.value) : null
+    const final = fechaFinal.value ? new Date(fechaFinal.value) : null
+
+    const filtrados = data.filter(row => {
+        const f = new Date(row.fecha)
+        if (inicio && f < inicio) return false
+        if (final && f > final) return false
+        return true
+    })
+
+    // --- ACUMULADORES ---
+    const valores = {}
+    Object.keys(campos).forEach(k => valores[k] = 0)
+
+    // --- SUMAR CADA REGISTRO ---
+    for (const row of filtrados) {
+        const tipo = clasificarCuenta(row.cuenta)
+        if (tipo) valores[tipo] += Number(row.monto)
+    }
+
+    // --- CÁLCULOS ---
+    valores.utilidadBruta = valores.ventas + valores.servicios + valores.otrosIngresosOp
+                              - valores.costoVentas - valores.costoServicios
+
+    valores.utilidadOperativa = valores.utilidadBruta
+                                - valores.gastosOperativos - valores.gastosAdmin
+                                - valores.gastosVenta - valores.gastosMkt - valores.nomina
+                                - valores.depreciacion - valores.amortizacion
+                                - valores.otrosGastos + valores.otrosIngresos
+
+    valores.uai = valores.utilidadOperativa - valores.interesesPagados + valores.interesesGanados
+
+    valores.utilidadNeta = valores.uai - valores.isr - valores.ptu
+
+    // --- PINTAR EN TABLA ---
+    Object.entries(campos).forEach(([key, id]) => {
+        const el = document.getElementById(id)
+        if (el) el.innerText = "$" + valores[key].toLocaleString()
+    })
+}
+
+actualizarBtn.addEventListener("click", cargarEstado)
+
+// cargar al abrir la página
+cargarEstado()
+</script>
+
 
 </body>
 
