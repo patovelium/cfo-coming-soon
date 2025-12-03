@@ -557,7 +557,7 @@ const actualizarBtn = document.getElementById("actualizarBtn")
 
 // === IDs de la tabla ===
 const campos = {
-    ventas: "er-ventas",
+    ventas: "er-ventass",
     servicios: "er-servicios",
     otrosIngresosOp: "er-otrosIngresosOp",
 
@@ -661,6 +661,7 @@ function clasificarCuenta(cuenta) {
 
 // === FUNCIÓN PRINCIPAL PARA CARGAR EL ESTADO DE RESULTADOS ===
 async function cargarEstado() {
+    console.log("DATA SUPABASE:", data)
     const { data: { session } } = await supabase.auth.getSession()
     if (!session) return
 
