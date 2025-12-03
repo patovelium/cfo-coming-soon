@@ -487,18 +487,14 @@
         <script>
             const modal = document.getElementById("dataModal")
             const openBtn = document.getElementById("openModal")
-            const cuenta = document.getElementById("cuenta")
-            const monto = document.getElementById("monto")
-            const fecha = document.getElementById("fecha")
 
             // Abrir modal
             openBtn.addEventListener("click", (e) => {
                 e.preventDefault()
-
                 modal.style.display = "flex"
 
-                cuenta.value = ""
-                monto.value = ""
+        document.getElementById("cuenta").value = ""
+        document.getElementById("monto").value = ""
 
                 const hoy = new Date().toISOString().split("T")[0]
                 fecha.value = hoy
