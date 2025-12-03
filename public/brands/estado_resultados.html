@@ -661,7 +661,12 @@ function clasificarCuenta(cuenta) {
 
 // === FUNCIÓN PRINCIPAL PARA CARGAR EL ESTADO DE RESULTADOS ===
 async function cargarEstado() {
-    console.log("DATA SUPABASE:", data)
+function cargarEstado() {
+    
+    const data = obtenerDatos();
+    console.log(data); // Ahora sí funciona
+}
+
     const { data: { session } } = await supabase.auth.getSession()
     if (!session) return
 
