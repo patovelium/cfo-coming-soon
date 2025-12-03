@@ -659,8 +659,9 @@ function clasificarCuenta(cuenta) {
 
 
 
-// === FUNCIÓN PRINCIPAL PARA CARGAR EL ESTADO DE RESULTADOS ===
 async function cargarEstado() {
+
+    // --- SESIÓN ---
     const { data: { session } } = await supabase.auth.getSession()
     if (!session) return;
 
@@ -676,7 +677,6 @@ async function cargarEstado() {
     }
 
     console.log(data);
-}
 
     // --- FILTRAR POR FECHA ---
     const inicio = fechaInicio.value ? new Date(fechaInicio.value) : null
@@ -701,7 +701,7 @@ async function cargarEstado() {
 
     // --- CÁLCULOS ---
     valores.utilidadBruta = valores.ventas + valores.servicios + valores.otrosIngresosOp
-                              - valores.costoVentas - valores.costoServicios
+                            - valores.costoVentas - valores.costoServicios
 
     valores.utilidadOperativa = valores.utilidadBruta
                                 - valores.gastosOperativos - valores.gastosAdmin
@@ -718,7 +718,8 @@ async function cargarEstado() {
         const el = document.getElementById(id)
         if (el) el.innerText = "$" + valores[key].toLocaleString()
     })
-}
+}  
+
 
 actualizarBtn.addEventListener("click", cargarEstado)
 
