@@ -96,7 +96,45 @@
             color: white;
             border-color: #0f766e;
         }
-    </style>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+        background: #ffffff;
+        color: #0f172a;
+    }
+
+    /* ===== EXPORT MENU ===== */
+    .export-option {
+        padding: 12px 16px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        color: #0f172a;
+        transition: background 0.2s;
+    }
+
+    .export-option:hover {
+        background: #f1f5f9;
+    }
+
+    .export-option:first-child {
+        border-top-left-radius: 14px;
+        border-top-right-radius: 14px;
+    }
+
+    .export-option:last-child {
+        border-bottom-left-radius: 14px;
+        border-bottom-right-radius: 14px;
+    }
+</style>
+        
 </head>
 
 <body>
@@ -200,9 +238,25 @@
     ">
         Exportar
     </button>
-</div>
-                
-            </div>
+
+<div id="exportMenu" style="
+    position: absolute;
+    margin-top: 8px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    display: none;
+    min-width: 180px;
+    z-index: 1000;
+">
+    <div class="export-option" data-type="pdf">
+        📄 Exportar PDF
+    </div>
+    <div class="export-option" data-type="xlsx">
+        📊 Exportar Excel
+    </div>
+</div>       
 
 <div style="
     background: white;
@@ -675,19 +729,31 @@ function clasificarCuenta(cuenta) {
     }
 }
 
- const exportarBtn = document.getElementById("exportarBtn")
+const exportarBtn = document.getElementById("exportarBtn")
+const exportMenu = document.getElementById("exportMenu")
 
-exportarBtn.addEventListener("click", () => {
-    const tipo = prompt("Escribe: pdf o xlsx")
-
-    if (tipo === "pdf") {
-        exportarPDF()
-    } else if (tipo === "xlsx") {
-        exportarExcel()
-    } else {
-        alert("Opción no válida")
-    }
+exportarBtn.addEventListener("click", (e) => {
+    e.stopPropagation()
+    exportMenu.style.display =
+        exportMenu.style.display === "block" ? "none" : "block"
 })
+
+// Click en opción
+document.querySelectorAll(".export-option").forEach(option => {
+    option.addEventListener("click", () => {
+        const tipo = option.dataset.type
+        exportMenu.style.display = "none"
+
+        if (tipo === "pdf") exportarPDF()
+        if (tipo === "xlsx") exportarExcel()
+    })
+})
+
+// Cerrar al hacer click fuera
+document.addEventListener("click", () => {
+    exportMenu.style.display = "none"
+})
+
             
 
 actualizarBtn.addEventListener("click", () => {
