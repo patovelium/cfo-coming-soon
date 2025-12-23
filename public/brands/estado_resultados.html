@@ -671,6 +671,21 @@ function clasificarCuenta(cuenta) {
     }
 }
 
+ const exportarBtn = document.getElementById("exportarBtn")
+
+exportarBtn.addEventListener("click", () => {
+    const tipo = prompt("Escribe: pdf o xlsx")
+
+    if (tipo === "pdf") {
+        exportarPDF()
+    } else if (tipo === "xlsx") {
+        exportarExcel()
+    } else {
+        alert("Opción no válida")
+    }
+})
+            
+
 actualizarBtn.addEventListener("click", () => {
     cargarEstado();
 });
