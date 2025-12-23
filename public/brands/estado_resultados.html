@@ -693,28 +693,7 @@ exportarBtn.addEventListener("click", () => {
 actualizarBtn.addEventListener("click", () => {
     cargarEstado();
 });
-
-async function cargarEstado() {
-
-    // --- SESIÓN ---
-    const { data: { session } } = await supabase.auth.getSession()
-    if (!session) return;
-
-    console.log("Email:", session.user.email)
-
-const { data, error } = await supabase
-    .from("carton_data")
-    .select("*")
-    .order("fecha", { ascending: true });
-
-console.log("Datos sin filtrar:", data); 
-
-    if (error) {
-        console.error(error);
-        return;
-    }
-
-    async function obtenerDatosFiltrados() {
+ async function obtenerDatosFiltrados() {
     const { data, error } = await supabase
         .from("carton_data")
         .select("*")
@@ -756,6 +735,26 @@ async function exportarPDF() {
     XLSX.utils.book_append_sheet(libro, hoja, "Estado de Resultados")
     XLSX.writeFile(libro, "estado_resultados.xlsx")
 }
+async function cargarEstado() {
+
+    // --- SESIÓN ---
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session) return;
+
+    console.log("Email:", session.user.email)
+
+const { data, error } = await supabase
+    .from("carton_data")
+    .select("*")
+    .order("fecha", { ascending: true });
+
+console.log("Datos sin filtrar:", data); 
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+    
     console.log(data);
 
     // --- FILTRAR POR FECHA ---
