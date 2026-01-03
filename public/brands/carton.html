@@ -78,47 +78,47 @@
   </style>
 </head>
 
-<section style="
-  padding: 40px 5%;
-">
-  <h2 style="
-    font-size: 1.6rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-  ">
+<body>
+<section style="padding: 40px 5%;">
+  <h2 style="font-size: 1.6rem; font-weight: 700; margin-bottom: 20px;">
     Resumen Estado de Resultados
   </h2>
 
-  <div id="erResumen" style="
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+  <div style="
+    background: white;
+    border-radius: 20px;
+    padding: 28px;
+    max-width: 700px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
   ">
-    <div class="er-card">
-      <span>Ventas Netas</span>
-      <strong id="ventasNetas">$0</strong>
-    </div>
+    <table style="width:100%; border-collapse: collapse;">
+      <tbody>
+        <tr class="er-row">
+          <td>Ventas Netas</td>
+          <td id="ventasNetas" class="er-value">$0</td>
+        </tr>
 
-    <div class="er-card">
-      <span>Utilidad Bruta</span>
-      <strong id="utilidadBruta">$0</strong>
-    </div>
+        <tr class="er-row subtotal">
+          <td>Utilidad Bruta</td>
+          <td id="utilidadBruta" class="er-value">$0</td>
+        </tr>
 
-    <div class="er-card">
-      <span>Utilidad Operativa</span>
-      <strong id="utilidadOperativa">$0</strong>
-    </div>
+        <tr class="er-row">
+          <td>Utilidad Operativa</td>
+          <td id="utilidadOperativa" class="er-value">$0</td>
+        </tr>
 
-    <div class="er-card">
-      <span>Utilidad Neta</span>
-      <strong id="utilidadNeta">$0</strong>
-    </div>
+        <tr class="er-row total">
+          <td>Utilidad Neta</td>
+          <td id="utilidadNeta" class="er-value">$0</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
   
-<body>
-
 <header style="
   display:flex;
   align-items:center;
