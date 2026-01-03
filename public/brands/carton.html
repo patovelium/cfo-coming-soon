@@ -79,6 +79,30 @@
 </head>
 
 <body>
+
+  
+<header style="
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 0.5rem 5%;
+  background: #111827;
+  border-bottom: 1px solid #1f2937;
+">
+  <a href="/brands/carton.html">
+    <img src="../demologo.svg" alt="Velium Logo" style="height:4.5rem; margin-left: -2.3rem ">
+  </a>
+
+  <nav style="display:flex; gap:28px; font-size:0.95rem;align-items:center; margin-top:6px; margin-left: 70px">
+    <a href="/brands/carton.html" style="color:#F9FAFB; text-decoration:none;">Dashboard</a>
+    <a href="#" id="openModal" style="color:#F9FAFB; text-decoration:none;">Agregar Datos</a>
+    <a href="#" style="color:#F9FAFB; text-decoration:none;">Simulador</a>
+    <a href="/brands/estado_resultados.html" style="color:#F9FAFB; text-decoration:none;">Estado de Resultados</a>
+    <a href="#" style="color:#F9FAFB; text-decoration:none;">Balance Genral</a>
+    <a href="#" style="color:#F9FAFB; text-decoration:none;">Cashflow</a>
+    <a href="#" id="logout-btn" class="login-btn">Logout</a>
+  </nav>
+</header>
 <section style="padding: 40px 5%;">
   <h2 style="font-size: 1.6rem; font-weight: 700; margin-bottom: 20px;">
     Resumen Estado de Resultados
@@ -117,31 +141,6 @@
     </table>
   </div>
 </section>
-
-  
-<header style="
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding: 0.5rem 5%;
-  background: #111827;
-  border-bottom: 1px solid #1f2937;
-">
-  <a href="/brands/carton.html">
-    <img src="../demologo.svg" alt="Velium Logo" style="height:4.5rem; margin-left: -2.3rem ">
-  </a>
-
-  <nav style="display:flex; gap:28px; font-size:0.95rem;align-items:center; margin-top:6px; margin-left: 70px">
-    <a href="/brands/carton.html" style="color:#F9FAFB; text-decoration:none;">Dashboard</a>
-    <a href="#" id="openModal" style="color:#F9FAFB; text-decoration:none;">Agregar Datos</a>
-    <a href="#" style="color:#F9FAFB; text-decoration:none;">Simulador</a>
-    <a href="/brands/estado_resultados.html" style="color:#F9FAFB; text-decoration:none;">Estado de Resultados</a>
-    <a href="#" style="color:#F9FAFB; text-decoration:none;">Balance Genral</a>
-    <a href="#" style="color:#F9FAFB; text-decoration:none;">Cashflow</a>
-    <a href="#" id="logout-btn" class="login-btn">Logout</a>
-  </nav>
-</header>
-
 <script type="module">
   import supabase from '../supabase.js'
 
